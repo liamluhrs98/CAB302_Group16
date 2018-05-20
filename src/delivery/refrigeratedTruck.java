@@ -2,7 +2,10 @@ package delivery;
 
 public class refrigeratedTruck extends truck {
 
-	public refrigeratedTruck() {
+	private String item;
+	private int quantity;
+	
+	public refrigeratedTruck(String item, int quantity) {
 		// TODO Auto-generated constructor stub
 		super("refrigerated");
 	}

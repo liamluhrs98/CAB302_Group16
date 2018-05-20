@@ -1,8 +1,11 @@
 package delivery;
 
 public class ordinaryTruck extends truck {
+	
+	private String item;
+	private int quantity;
 
-	public ordinaryTruck() {
+	public ordinaryTruck(String item, int quantity) {
 		// TODO Auto-generated constructor stub
 		super("ordinary");
 	}
@@ -14,4 +17,5 @@ public class ordinaryTruck extends truck {
 	public int getCost() {
 		return 0;
 	}
+	
 }
