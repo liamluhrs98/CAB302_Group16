@@ -16,8 +16,49 @@ import exceptions.deliveryExceptions;
 public class deliveryTests {
 	
 	@Test
-	public void ValidOrder() throws csvFormatExceptions {
+	public void validOrder() throws deliveryExceptions {
 		
 	}
 	
+	@Test
+	public void invalidType() throws deliveryExceptions {
+		
+	}
+	
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
+	
+	@Test
+	public void  throws deliveryExceptions {
+		
+	}
 }
