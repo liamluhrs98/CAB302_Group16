@@ -7,7 +7,7 @@ import exceptions.deliveryExceptions;
 
 /**
  * 
- * This class tests the classes in the delviery package.
+ * This class tests the classes in the delivery package.
  * 
  * @author harry
  *
