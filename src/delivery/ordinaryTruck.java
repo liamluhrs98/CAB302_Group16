@@ -1,21 +1,25 @@
 package delivery;
 
 public class ordinaryTruck extends truck {
-	
+	public double oCost;
 	private String item;
 	private int quantity;
+	private int totalQuantity;
 
 	public ordinaryTruck(String item, int quantity) {
-		// TODO Auto-generated constructor stub
 		super("ordinary");
+		this.item = item;
+		this.quantity = quantity;
+		this.totalQuantity += quantity;
 	}
 	
 	public int getCapacity() {
 		return 1000;
 	}
 	
-	public int getCost() {
-		return 0;
+	public double getCost() {
+		oCost = 750 + (0.25 * totalQuantity); 
+		return oCost;
 	}
 	
 }
