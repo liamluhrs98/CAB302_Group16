@@ -16,7 +16,7 @@ import exceptions.deliveryExceptions;
 public class deliveryTests {
 	
 	@Test
-	public void ValidOrder() throws deliveryExceptions {
+	public void ValidOrder() throws csvFormatExceptions {
 		
 	}
 	
