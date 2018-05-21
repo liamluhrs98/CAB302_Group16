@@ -1,7 +1,5 @@
 package delivery;
 
-import java.util.HashMap;
-
 public class refrigeratedTruck extends truck {
 	public double rCost;
 	public int reCapacity = 800;

@@ -1,7 +1,5 @@
 package delivery;
 
-import java.util.HashMap;
-
 public class ordinaryTruck extends truck {
 	public double oCost;
 	public int orCapacity = 1000;
