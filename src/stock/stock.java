@@ -12,4 +12,14 @@ public class stock {
 		this.itemQuantity = itemQuantity;
 	}
 	
+	public String getStockItemName() {
+		return this.itemName;
+	}
+	
+	public int getStockItemQuantity() {
+		return this.itemQuantity;
+	}
+	
+	
+	
 }
