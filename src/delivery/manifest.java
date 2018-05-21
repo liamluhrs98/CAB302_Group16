@@ -1,14 +1,12 @@
 package delivery;
 
+import java.util.HashMap;
+
 public class manifest {
 	private String type;
-	private String item;
-	private int quantity;
 	
-	public manifest(String type, String item, int quantity) {
+	public manifest(String type, ) {
 		this.type = type;
-		this.item = item;
-		this.quantity = quantity;
 	}
 	
 }

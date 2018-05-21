@@ -1,26 +1,23 @@
 package delivery;
 
+import java.util.HashMap;
+
 public class ordinaryTruck extends truck {
 	public double oCost;
 	public int orCapacity = 1000;
-	private String item;
-	public String name;
-	private int quantity;
+	private String name;
 	private int totalQuantity;
 
-	public ordinaryTruck(String name, String item, int quantity) {
+	public ordinaryTruck(String name, order order) {
 		super("ordinary", name);
 		this.name = name;
-		this.item = item;
-		this.quantity = quantity;
-		this.totalQuantity += quantity;
 	}
 	
 	public int getCapacityOrd() {
 		return orCapacity;
 	}
 	
-	public double getCostOrd() {
+	public double getCostOrd(int totalQuantity) {
 		oCost = 750 + (0.25 * totalQuantity); 
 		return oCost;
 	}
