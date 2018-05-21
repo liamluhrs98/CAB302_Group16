@@ -1,10 +1,32 @@
 package delivery;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class deliveryMain {
 	
-	public void importOrder() {
+	public static void main(String[] args) {
 		//Import CSV
 		//Sort into object/array/hashmap
+		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
+		String line = "";
+		String csvSplitBy = ",";
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
+
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] name = line.split(csvSplitBy);
+
+                System.out.println(name[0]+ "=" + name[1]);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public void sortFood() {
