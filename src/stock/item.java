@@ -20,6 +20,13 @@ public class item {
 		this.reord_point = reord_point;
 		this.reord_amt = reord_amt;
 		this.temp = temp;
+		
 	}
+	
+	public String getItemName() {
+		return this.name;
+	}
+	
+	
 	
 }
