@@ -22,11 +22,11 @@ public class deliveryMain {
 	    return b;
 	}
 	
-	int[] amountInts = null;
-	String[] names = new String[30];
-	ArrayList<order> orderlist = new ArrayList<order>();
-	ArrayList<String> cold_food = new ArrayList<String>();
-	ArrayList<String> dry_food = new ArrayList<String>();
+	private int[] amountInts = null;
+	private String[] names = new String[30];
+	private ArrayList<order> orderlist = new ArrayList<order>();
+	private ArrayList<String> cold_food = new ArrayList<String>();
+	private ArrayList<String> dry_food = new ArrayList<String>();
 	
 	public void importOrderCSV() {
 		//Import CSV
