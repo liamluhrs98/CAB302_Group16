@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import stock.item;
+
 public class deliveryMain {
 	
 	public static void main(String[] args) {
@@ -20,12 +22,15 @@ public class deliveryMain {
 	    return b;
 	}
 	
+	int[] amountInts = null;
+	String[] names = new String[30];
+	ArrayList<order> orderlist = new ArrayList<order>();
+	String[] cold_items = new String[30];
+	String[] dry_items = new String[30];
+	
 	public void importOrderCSV() {
 		//Import CSV
 		//Sort into object/array
-		int[] amountInts = null;
-		String[] names = new String[30];
-		ArrayList<order> orderlist = new ArrayList<order>();
 		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
 		String line = "";
 		String csvSplitBy = ",";
@@ -56,8 +61,10 @@ public class deliveryMain {
 	
 	public void sortFood() {
 		//Sort objects by temp into cold food and dry food
-		for(str element: names) {
-			
+		for(String element: names) {
+			if ( item.getTemp(element) != null ) {
+				element.add(cold_items);
+			}
 		}
 	}
 	
