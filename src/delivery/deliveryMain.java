@@ -30,26 +30,25 @@ public class deliveryMain {
                 
                 for (int i = 0; i < amount.length; i++) {
         			arr = strArrayToIntArray(amount);
-        		}
-                
+        		}               
                 
                 for (int i = 0; i < amount.length; i++) {
                 	orderlist.add(new order(names[i], arr[i]));
                 }
                 
-                
+                System.out.println(names[0] + "=" + arr[0]);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 		
-		for (int i = 0; i< names.length; i++) {
-			String[][] test = new String[50][50];
-			test[0][i] = names[i];
-			test[1][i] = Integer.toString(arr[i]);
-			System.out.println(test[0][i] + "=" + test[1][i]);
-		}
+		//for (int i = 0; i< names.length; i++) {
+			//String[][] test = new String[50][50];
+			//test[0][i] = names[i];
+			//test[1][i] = Integer.toString(arr[i]);
+			//System.out.println(test[0][i] + "=" + test[1][i]);
+		//}
 	}
 	
 	public static int[] strArrayToIntArray(String[] a){
