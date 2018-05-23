@@ -25,8 +25,8 @@ public class deliveryMain {
 	int[] amountInts = null;
 	String[] names = new String[30];
 	ArrayList<order> orderlist = new ArrayList<order>();
-	String[] cold_items = new String[30];
-	String[] dry_items = new String[30];
+	ArrayList<String> cold_food = new ArrayList<String>();
+	ArrayList<String> dry_food = new ArrayList<String>();
 	
 	public void importOrderCSV() {
 		//Import CSV
@@ -63,8 +63,10 @@ public class deliveryMain {
 		//Sort objects by temp into cold food and dry food
 		for(String element: names) {
 			if ( item.getTemp(element) != null ) {
-				element.add(cold_items);
+				cold_food.add(element); 
 			}
+			else 
+				dry_food.add(element);
 		}
 	}
 	
@@ -72,7 +74,6 @@ public class deliveryMain {
 		//Get total quantity of cold food
 		//Get total quantity of dry food
 		//Sort into cold truck, then into dry truck with leftovers
-		
 	}
 	
 	public void calcCost() {
