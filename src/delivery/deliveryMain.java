@@ -9,8 +9,8 @@ public class deliveryMain {
 	
 	public static void main(String[] args) {
 		//Import CSV
-		//Sort into object/array/hashmap
-		int[] arr = null;
+		//Sort into object/array
+		int[] amountInts = null;
 		String[] names = new String[30];
 		ArrayList<order> orderlist = new ArrayList<order>();
 		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
@@ -22,19 +22,19 @@ public class deliveryMain {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] name = line.split(csvSplitBy);
-                String[] amount = new String[] {name[1]};
-                names = new String[] {name[0]};
+                String[] csv = line.split(csvSplitBy);
+                String[] amounts = new String[] {csv[1]};
+                names = new String[] {csv[0]};
                 
-                for (int i = 0; i < amount.length; i++) {
-        			arr = strArrayToIntArray(amount);
+                for (int i = 0; i < amounts.length; i++) {
+        			amountInts = strArrayToIntArray(amounts);
         		}               
                 
-                for (int i = 0; i < amount.length; i++) {
-                	orderlist.add(new order(names[i], arr[i]));
+                for (int i = 0; i < amounts.length; i++) {
+                	orderlist.add(new order(names[i], amountInts[i]));
                 }
                 
-                System.out.println(names[0] + "=" + arr[0]);
+                System.out.println(names[0] + "=" + amountInts[0]);
             }
 
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class deliveryMain {
 		//for (int i = 0; i< names.length; i++) {
 			//String[][] test = new String[50][50];
 			//test[0][i] = names[i];
-			//test[1][i] = Integer.toString(arr[i]);
+			//test[1][i] = Integer.toString(amountInts[i]);
 			//System.out.println(test[0][i] + "=" + test[1][i]);
 		//}
 	}
