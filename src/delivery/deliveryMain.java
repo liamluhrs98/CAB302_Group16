@@ -8,45 +8,7 @@ import java.util.ArrayList;
 public class deliveryMain {
 	
 	public static void main(String[] args) {
-		//Import CSV
-		//Sort into object/array
-		int[] amountInts = null;
-		String[] names = new String[30];
-		ArrayList<order> orderlist = new ArrayList<order>();
-		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
-		String line = "";
-		String csvSplitBy = ",";
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
-
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] csv = line.split(csvSplitBy);
-                String[] amounts = new String[] {csv[1]};
-                names = new String[] {csv[0]};
-                
-                for (int i = 0; i < amounts.length; i++) {
-        			amountInts = strArrayToIntArray(amounts);
-        		}               
-                
-                for (int i = 0; i < amounts.length; i++) {
-                	orderlist.add(new order(names[i], amountInts[i]));
-                }
-                
-                System.out.println(names[0] + "=" + amountInts[0]);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		
-		//for (int i = 0; i< names.length; i++) {
-			//String[][] test = new String[50][50];
-			//test[0][i] = names[i];
-			//test[1][i] = Integer.toString(amountInts[i]);
-			//System.out.println(test[0][i] + "=" + test[1][i]);
-		//}
 	}
 	
 	public static int[] strArrayToIntArray(String[] a){
@@ -58,9 +20,45 @@ public class deliveryMain {
 	    return b;
 	}
 	
+	public void importOrderCSV() {
+		//Import CSV
+		//Sort into object/array
+		int[] amountInts = null;
+		String[] names = new String[30];
+		ArrayList<order> orderlist = new ArrayList<order>();
+		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
+		String line = "";
+		String csvSplitBy = ",";
+				
+		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
+
+	          while ((line = br.readLine()) != null) {
+	        	  	// use comma as separator
+		            String[] csv = line.split(csvSplitBy);
+		            String[] amounts = new String[] {csv[1]};
+		            names = new String[] {csv[0]};
+		                
+		            for (int i = 0; i < amounts.length; i++) {
+		        		amountInts = strArrayToIntArray(amounts);
+		        	}               
+		                
+		            for (int i = 0; i < amounts.length; i++) {
+		                orderlist.add(new order(names[i], amountInts[i]));
+		            }
+		                
+		            System.out.println(names[0] + "=" + amountInts[0]);
+		      }
+
+		      } catch (IOException e) {
+		    	  e.printStackTrace();
+		 }
+	}
+	
 	public void sortFood() {
 		//Sort objects by temp into cold food and dry food
-		
+		for(str element: names) {
+			
+		}
 	}
 	
 	public void truckAssign() {
