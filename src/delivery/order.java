@@ -1,5 +1,7 @@
 package delivery;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author harry
@@ -7,19 +9,19 @@ package delivery;
  */
 
 public class order {
-	public String name;
-	public int amount;
+	public ArrayList<String> names;
+	public ArrayList<Integer> amount;
 	
-	public order(String name, int amount) {
-		this.name = name;
+	public order(ArrayList<String> names, ArrayList<Integer> amount) {
+		this.names = names;
 		this.amount = amount;
 	}
 	
-	public String getName() {
-		return name;
+	public ArrayList<String> getName() {
+		return names;
 	}
 	
-	public int getAmount() {
+	public ArrayList<Integer> getAmount() {
 		return amount;
 	}
 }

@@ -47,22 +47,12 @@ public class deliveryMain {
 		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
 		String line = "";
 		String csvSplitBy = ",";
-				
-		int lineCount = 0;
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
-			lineCount += 1;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		String[] importedCSV = new String[lineCount];
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
 
 	          while ((line = br.readLine()) != null) {	        	  	
 	        	  	// use comma as separator
-		            importedCSV = line.split(csvSplitBy);
+		            String[] importedCSV = line.split(csvSplitBy);
 		            
 		            names.add(importedCSV[0]);
 		            amount.add(importedCSV[1]);
@@ -71,9 +61,9 @@ public class deliveryMain {
 		        		amountInts = d_strArrayToIntArray(amount);
 		        	}               
 		                
-		            //for (int i = 0; i < amount.size(); i++) {
-		              //  orderlist.add(new order(names[i], amountInts[i]));
-		            //}
+		            for (int i = 0; i < amount.size(); i++) {
+		              orderlist.add(new order(names, amountInts));
+		            }
 		            
 		      	}
 
