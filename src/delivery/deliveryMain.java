@@ -84,45 +84,35 @@ public class deliveryMain {
 	}
 	
 	public static void truckAssign() {
-		//Get total quantity of cold food
-		int totalcold = 0;
-		for (int t : cold_food_amount) {
-			totalcold += t;
-		}
-		//Get total quantity of dry food
-		int totaldry = 0;
-		for (int t : dry_food_amount) {
-			totaldry += t;
-		}
 		//Divide amounts into 800 for cold and 1000 for dry
-		double cold = 0.0;
-		double dry = 0.0;
 		int cq = 800;
 		int dq = 1000;
+		int currentquan = 0;
 		
 		ArrayList<String> coldItems = new ArrayList<String>();
 		ArrayList<Integer> coldItemA = new ArrayList<Integer>();
-		
-		for (int i = 0; i < (cold_food.size() + dry_food.size()); i++) {
-			if (coldItemA < 800) {
-				coldItems.add(cold_food.get(i));
-				coldItemA.add(cold_food_amount.get(i));
-			}
-			
-		}
+		ArrayList<String> dryItems = new ArrayList<String>();
+		ArrayList<Integer> dryItemA = new ArrayList<Integer>();
 		
 		while (cold_food.size() > 0 && dry_food.size() > 0) {
+			if (currentquan >= 800) {
+				break;
+			}
 			
+			for (Integer am: coldItemA) {
+				currentquan += am;
+			}
+			
+			for (int i = 0; i < (cold_food.size()+dry_food.size()); i++) {
+				coldItems.add(cold_food.get(i));
+				coldItemA.add(cold_food_amount.get(i));
+				
+				cold_food.remove(0);
+				cold_food_amount.remove(0);
+			}
 		}
 		
 		//Sort into cold truck, then into dry truck with leftovers
-		for (int i = 0; i < cold; i++) {
-			refrigeratedTruck refrig1 = new refrigeratedTruck( "reTruck" + i, cold_food, cold_food_amount);
-		}
-		
-		for (int i = 0; i < dry; i++) {
-			ordinaryTruck ord1 = new ordinaryTruck("ordTruck" + i, dry_food, dry_food_amount);
-		}
 	}
 	
 	public static void calcCost() {
