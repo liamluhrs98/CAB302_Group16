@@ -16,32 +16,33 @@ import stock.item;
 
 public class deliveryMain {
 	
-	public static void main(String[] args) {
-		
-	}
-	
 	//String Array to Integer Array Method
-	public static int[] d_strArrayToIntArray(String[] a){
-	    int[] b = new int[a.length];
-	    for (int i = 0; i < a.length; i++) {
-		        b[i] = Integer.parseInt(a[i]);
+	public static ArrayList<Integer> d_strArrayToIntArray(ArrayList<String> a){
+	    ArrayList<Integer> b = new ArrayList<Integer>();
+	    for (String stringValue : a) {
+	    	try {
+	    		b.add(Integer.parseInt(stringValue));
+	    	} catch(NumberFormatException nfe) {
+	    		
+	    	}
 	    }
 	    return b;
 	}
 	
 	//Imported CSV Variables
-	private String[] importedCSV = new String[30];
-	private int[] amountInts = null;
-	private String[] names = new String[30];
-	private ArrayList<order> orderlist = new ArrayList<order>();
+	private static String[] importedCSV = new String[30];
+	private static ArrayList<Integer> amountInts = new ArrayList<Integer>();
+	private static ArrayList<String> amount = new ArrayList<String>();
+	private static ArrayList<String> names = new ArrayList<String>();
+	private static ArrayList<order> orderlist = new ArrayList<order>();
 	
 	//Truck Assigning Variables
-	private ArrayList<String> cold_food = new ArrayList<String>();
-	private ArrayList<Integer> cold_food_amount = new ArrayList<Integer>();
-	private ArrayList<String> dry_food = new ArrayList<String>();
-	private ArrayList<Integer> dry_food_amount = new ArrayList<Integer>();
+	private static ArrayList<String> cold_food = new ArrayList<String>();
+	private static ArrayList<Integer> cold_food_amount = new ArrayList<Integer>();
+	private static ArrayList<String> dry_food = new ArrayList<String>();
+	private static ArrayList<Integer> dry_food_amount = new ArrayList<Integer>();
 	
-	public void importOrderCSV() {
+	public static void importOrderCSV() {
 		//Import CSV
 		//Sort into object/array
 		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
@@ -54,18 +55,17 @@ public class deliveryMain {
 	        	  	// use comma as separator
 		            importedCSV = line.split(csvSplitBy);
 		            
-		            String[] amounts = new String[] {importedCSV[1]};
-		            names = new String[] {importedCSV[0]};
+		            names.add(importedCSV[0]);
+		            amount.add(importedCSV[1]);
 		                
-		            for (int i = 0; i < amounts.length; i++) {
-		        		amountInts = d_strArrayToIntArray(amounts);
+		            for (int i = 0; i < amount.size(); i++) {
+		        		amountInts = d_strArrayToIntArray(amount);
 		        	}               
 		                
-		            for (int i = 0; i < amounts.length; i++) {
-		                orderlist.add(new order(names[i], amountInts[i]));
-		            }
+		            //for (int i = 0; i < amount.size(); i++) {
+		              //  orderlist.add(new order(names[i], amountInts[i]));
+		            //}
 		            
-		            System.out.println(names[0] + "=" + amountInts[0]);
 		      	}
 
 		      } catch (IOException e) {
@@ -73,21 +73,21 @@ public class deliveryMain {
 		 }
 	}
 	
-	public void sortFood() {
+	public static void sortFood() {
 		//Sort objects by temperature into cold food and dry food
 		for (int i = 0; i < importedCSV.length; i++) {
-			if ( item.getTemp(names[i]) != null) {
-				cold_food.add(names[i]);
-				cold_food_amount.add(amountInts[i]);
+			if ( item.getTemp(names.get(i)) != null) {
+				cold_food.add(names.get(i));
+				cold_food_amount.add(amountInts.get(i));
 			}
 			else
-				dry_food.add(names[i]);
-				dry_food_amount.add(amountInts[i]);
+				dry_food.add(names.get(i));
+				dry_food_amount.add(amountInts.get(i));
 		}
 		
 	}
 	
-	public void truckAssign() {
+	public static void truckAssign() {
 		//Get total quantity of cold food
 		int totalcold = 0;
 		for (int t : cold_food_amount) {
@@ -125,7 +125,7 @@ public class deliveryMain {
 		//Sort into cold truck, then into dry truck with leftovers
 	}
 	
-	public void calcCost() {
+	public static void calcCost() {
 		//Get total dry quantity
 		int dryQuantity = 0;
 		for (int q : dry_food_amount) {
@@ -143,7 +143,7 @@ public class deliveryMain {
 		//double rCost = refrigeratedTruck.getCostRe(lowestTemp);
 	}
 	
-	public void createManifest() {
+	public static void createManifest() {
 		//Make Manifest CSV
 			//Refridge
 				//name, quantity
@@ -151,4 +151,10 @@ public class deliveryMain {
 				//name, quantity
 	}
 	
+	public static void main(String[] args) {
+		importOrderCSV();
+		for (int i = 0; i < names.size(); i++) {
+			System.out.println(names.get(i) + "=" + amountInts.get(i));
+		}
+	}
 }
