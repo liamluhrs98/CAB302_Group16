@@ -88,28 +88,30 @@ public class deliveryMain {
 		int cq = 800;
 		int dq = 1000;
 		int currentquan = 0;
+		int coldCount = 0;
+		int dryCount = 0;
 		
 		ArrayList<String> coldItems = new ArrayList<String>();
 		ArrayList<Integer> coldItemA = new ArrayList<Integer>();
 		ArrayList<String> dryItems = new ArrayList<String>();
 		ArrayList<Integer> dryItemA = new ArrayList<Integer>();
 		
-		while (cold_food.size() > 0 && dry_food.size() > 0) {
-			if (currentquan >= 800) {
-				break;
+		while (cold_food.size() > 0) {
+			//Add amount of cold trucks needed
+			if (currentquan >= cq) {
+				coldCount += 1;
+				currentquan = 0;
 			}
-			
+			//Sum of all the items in the current truck
 			for (Integer am: coldItemA) {
 				currentquan += am;
 			}
-			
-			for (int i = 0; i < (cold_food.size()+dry_food.size()); i++) {
-				coldItems.add(cold_food.get(i));
-				coldItemA.add(cold_food_amount.get(i));
-				
-				cold_food.remove(0);
-				cold_food_amount.remove(0);
-			}
+			//Add the items to the current trucks inventory
+			coldItems.add(cold_food.get(0));
+			coldItemA.add(cold_food_amount.get(0));
+			//Remove the item from the list after its been added
+			cold_food.remove(0);
+			cold_food_amount.remove(0);
 		}
 		
 		//Sort into cold truck, then into dry truck with leftovers
