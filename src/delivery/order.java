@@ -1,5 +1,11 @@
 package delivery;
 
+/**
+ * 
+ * @author harry
+ *
+ */
+
 public class order {
 	public String name;
 	public int amount;

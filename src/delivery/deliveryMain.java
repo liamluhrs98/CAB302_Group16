@@ -7,12 +7,20 @@ import java.util.ArrayList;
 
 import stock.item;
 
+/**
+ * 
+ * @author harry
+ *
+ */
+
+
 public class deliveryMain {
 	
 	public static void main(String[] args) {
 		
 	}
 	
+	//String Array to Integer Array Method
 	public static int[] strArrayToIntArray(String[] a){
 	    int[] b = new int[a.length];
 	    for (int i = 0; i < a.length; i++) {
@@ -22,10 +30,12 @@ public class deliveryMain {
 	    return b;
 	}
 	
+	//Imported CSV Variables
 	private String[] importedCSV = new String[30];
 	private int[] amountInts = null;
 	private String[] names = new String[30];
 	private ArrayList<order> orderlist = new ArrayList<order>();
+	//Truck Assigning Variables
 	private ArrayList<String> cold_food = new ArrayList<String>();
 	private ArrayList<Integer> cold_food_amount = new ArrayList<Integer>();
 	private ArrayList<String> dry_food = new ArrayList<String>();
@@ -64,8 +74,7 @@ public class deliveryMain {
 	}
 	
 	public void sortFood() {
-		//Sort objects by temp into cold food and dry food
-		
+		//Sort objects by temperature into cold food and dry food
 		for (int i = 0; i < importedCSV.length; i++) {
 			if ( item.getTemp(names[i]) != null) {
 				cold_food.add(names[i]);

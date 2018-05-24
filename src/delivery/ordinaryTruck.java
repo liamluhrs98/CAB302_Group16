@@ -1,5 +1,11 @@
 package delivery;
 
+/**
+ * 
+ * @author harry
+ *
+ */
+
 public class ordinaryTruck extends truck {
 	public double oCost;
 	public int orCapacity = 1000;

@@ -1,5 +1,11 @@
 package delivery;
 
+/**
+ * 
+ * @author harry
+ *
+ */
+
 public class manifest {
 	private String type;
 	
