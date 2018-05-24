@@ -1,7 +1,5 @@
 package delivery;
 
-import java.util.ArrayList;
-
 /** 
  * 
  * @author harry
@@ -12,11 +10,10 @@ public class refrigeratedTruck extends truck {
 	public double rCost;
 	public int reCapacity = 800;
 	public String name;
-	private ArrayList<String> itemNames;
-	private ArrayList<Integer> itemAmounts;
-	private int lowestTemp = 2;
+	private String[] itemNames;
+	private int[] itemAmounts;
 	
-	public refrigeratedTruck(String name, ArrayList<String> itemNames, ArrayList<Integer> itemAmounts) {
+	public refrigeratedTruck(String name, String[] itemNames, int[] itemAmounts) {
 		super("refrigerated", name);
 		this.name = name;
 		this.itemNames = itemNames;
@@ -25,6 +22,14 @@ public class refrigeratedTruck extends truck {
 	
 	public String getReTruckName() {
 		return name;
+	}
+	
+	public String[] getItemNames() {
+		return itemNames;
+	}
+	
+	public int[] getItemAmounts() {
+		return itemAmounts;
 	}
 		
 	public int getCapacityRe() {

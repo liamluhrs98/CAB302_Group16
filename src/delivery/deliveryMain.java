@@ -16,7 +16,7 @@ import stock.item;
 
 public class deliveryMain {
 	
-	//String Array to Integer Array Method
+	//String ArrayList to Integer ArrayList Method
 	public static ArrayList<Integer> d_strArrayToIntArray(ArrayList<String> a){
 	    ArrayList<Integer> b = new ArrayList<Integer>();
 	    for (String stringValue : a) {
@@ -30,7 +30,6 @@ public class deliveryMain {
 	}
 	
 	//Imported CSV Variables
-	private static String[] importedCSV = new String[30];
 	private static ArrayList<Integer> amountInts = new ArrayList<Integer>();
 	private static ArrayList<String> amount = new ArrayList<String>();
 	private static ArrayList<String> names = new ArrayList<String>();
@@ -49,9 +48,19 @@ public class deliveryMain {
 		String line = "";
 		String csvSplitBy = ",";
 				
+		int lineCount = 0;
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
+			lineCount += 1;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String[] importedCSV = new String[lineCount];
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
 
-	          while ((line = br.readLine()) != null) {
+	          while ((line = br.readLine()) != null) {	        	  	
 	        	  	// use comma as separator
 		            importedCSV = line.split(csvSplitBy);
 		            
@@ -75,7 +84,7 @@ public class deliveryMain {
 	
 	public static void sortFood() {
 		//Sort objects by temperature into cold food and dry food
-		for (int i = 0; i < importedCSV.length; i++) {
+		for (int i = 0; i < names.size(); i++) {
 			if ( item.getTemp(names.get(i)) != null) {
 				cold_food.add(names.get(i));
 				cold_food_amount.add(amountInts.get(i));
@@ -115,6 +124,11 @@ public class deliveryMain {
 			
 		}
 		
+		while (cold_food.size() > 0 && dry_food.size() > 0) {
+			
+		}
+		
+		//Sort into cold truck, then into dry truck with leftovers
 		for (int i = 0; i < cold; i++) {
 			refrigeratedTruck refrig1 = new refrigeratedTruck( "reTruck" + i, cold_food, cold_food_amount);
 		}
@@ -122,7 +136,6 @@ public class deliveryMain {
 		for (int i = 0; i < dry; i++) {
 			ordinaryTruck ord1 = new ordinaryTruck("ordTruck" + i, dry_food, dry_food_amount);
 		}
-		//Sort into cold truck, then into dry truck with leftovers
 	}
 	
 	public static void calcCost() {
