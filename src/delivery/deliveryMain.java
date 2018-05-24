@@ -17,21 +17,21 @@ import stock.item;
 public class deliveryMain {
 	
 	//String ArrayList to Integer ArrayList Method
-	public static ArrayList<Integer> d_strArrayToIntArray(ArrayList<String> a){
-	    ArrayList<Integer> b = new ArrayList<Integer>();
-	    for (String stringValue : a) {
+	public static int d_StringToInt(String a){
+	    //ArrayList<Integer> b = new ArrayList<Integer>();
+	    int b = 0;
+		//for (String stringValue : a) {
 	    	try {
-	    		b.add(Integer.parseInt(stringValue));
+	    		//b.add(Integer.parseInt(stringValue));
+	    		b = Integer.parseInt(a);
 	    	} catch(NumberFormatException nfe) {
-	    		
+	    		System.out.println("Could not parse " + a + " as an integer, please check CSV.");
 	    	}
-	    }
 	    return b;
 	}
 	
 	//Imported CSV Variables
 	private static ArrayList<Integer> amountInts = new ArrayList<Integer>();
-	private static ArrayList<String> amount = new ArrayList<String>();
 	private static ArrayList<String> names = new ArrayList<String>();
 	private static ArrayList<order> orderlist = new ArrayList<order>();
 	
@@ -55,18 +55,12 @@ public class deliveryMain {
 		            String[] importedCSV = line.split(csvSplitBy);
 		            
 		            names.add(importedCSV[0]);
-		            amount.add(importedCSV[1]);
+		            amountInts.add(d_StringToInt(importedCSV[1]));              
 		                
-		            for (int i = 0; i < amount.size(); i++) {
-		        		amountInts = d_strArrayToIntArray(amount);
-		        	}               
-		                
-		            for (int i = 0; i < amount.size(); i++) {
+		            for (int i = 0; i < amountInts.size(); i++) {
 		              orderlist.add(new order(names, amountInts));
-		            }
-		            
+		            }	            
 		      	}
-
 		      } catch (IOException e) {
 		    	  e.printStackTrace();
 		 }
