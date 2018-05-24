@@ -1,6 +1,7 @@
 package delivery;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,15 +62,17 @@ public class deliveryMain {
 		              orderlist.add(new order(names, amountInts));
 		            }	            
 		      	}
-		      } catch (IOException e) {
-		    	  e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+		    } catch (IOException e) {
+		    	e.printStackTrace();
 		 }
 	}
 	
 	public static void sortFood() {
 		//Sort objects by temperature into cold food and dry food
 		for (int i = 0; i < names.size(); i++) {
-			if ( item.getTemp(names.get(i)) != null) {
+			if ( (names.get(i)).getTemp() != null) {
 				cold_food.add(names.get(i));
 				cold_food_amount.add(amountInts.get(i));
 			}
@@ -131,8 +134,8 @@ public class deliveryMain {
 		//Get lowest temp in cold food
 		int lowestTemp = 10;
 		for (String t : cold_food) {
-			if (item.getTemp(t) < lowestTemp) {
-				lowestTemp = item.getTemp(t);
+			if (t.getTemp() < lowestTemp) {
+				lowestTemp = t.getTemp();
 			}
 		}
 		//Call getCostOrd() and getCostRe() using the quantity and temp
