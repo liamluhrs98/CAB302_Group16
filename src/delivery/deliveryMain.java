@@ -10,7 +10,7 @@ import stock.item;
 
 /**
  * 
- * @author harry
+ * @author Harrison Perkins
  *
  */
 
@@ -80,7 +80,6 @@ public class deliveryMain {
 				dryFood.add(names.get(i));
 				dryFoodAmount.add(amountInts.get(i));
 		}
-		
 	}
 	
 	public static void truckAssign() {
