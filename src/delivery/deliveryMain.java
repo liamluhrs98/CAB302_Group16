@@ -85,41 +85,47 @@ public class deliveryMain {
 	
 	public static void truckAssign() {
 		//Divide amounts into 800 for cold and 1000 for dry
-		int cq = 800;
-		int dq = 1000;
-		int currentquanc = 0;
-		int currentquand = 0;
-		int coldCount = 0;
-		int dryCount = 0;
+		//Add amount of cold trucks needed
+		//Sum of all the items in the current truck
+		//Add the items to the current trucks inventory
+		//Remove the item from the list after its been added
+		//Sort into cold truck, then into dry truck with leftovers
 		
-		ArrayList<String> coldItems = new ArrayList<String>();
-		ArrayList<Integer> coldItemA = new ArrayList<Integer>();
-		ArrayList<String> dryItems = new ArrayList<String>();
-		ArrayList<Integer> dryItemA = new ArrayList<Integer>();
+		ArrayList<String> currentItemsCold = new ArrayList<String>();
+		ArrayList<Integer> currentAmountsCold = new ArrayList<Integer>();
+		ArrayList<String> currentItemsDry = new ArrayList<String>();
+		ArrayList<Integer> currentAmountsDry = new ArrayList<Integer>();
+		int sum = 0;
 		
-		while (coldFood.size() > 0) {
-			//Add amount of cold trucks needed
-			if (currentquanc >= cq) {
-				coldCount += 1;
-				currentquanc = 0;
-			}
-			//Sum of all the items in the current truck
-			for (Integer am: coldItemA) {
-				currentquanc += am;
-			}
-			//Add the items to the current trucks inventory
-			//Remove the item from the list after its been added
+		for( int i = 0; i < coldFood.size(); i++) {
+			currentItemsCold.add(coldFood.get(i));
+			currentAmountsCold.add(coldFoodAmount.get(i));
 			
-			for (int i = 0; i < coldFood.size(); i++) {
-				if (currentquanc <= cq) {
-					coldItems.add(coldFood.get(i));
-					coldItemA.add(coldFoodAmount.get(i));
-				}
-				
+			for (Integer quan: currentAmountsCold) {
+				sum += quan;
+			}
+			
+			if (sum >= 800) {
+				refrigeratedTruck newTruck = new refrigeratedTruck("refrigerated", currentItemsCold, currentAmountsCold);
+				currentItemsCold.clear();
+				currentAmountsCold.clear();
 			}
 		}
-		//Sort into cold truck, then into dry truck with leftovers
-		ordinaryTruck one = new ordinaryTruck("Ordinary", coldFood, coldFoodAmount);
+		
+		for (int i = 0; i < dryFood.size(); i++) {
+			currentItemsDry.add(dryFood.get(i));
+			currentAmountsDry.add(dryFoodAmount.get(i));
+			
+			for (Integer quan: currentAmountsDry) {
+				sum += quan;
+			}
+			
+			if (sum >= 800) {
+				ordinaryTruck newTruck = new ordinaryTruck("ordinary", currentItemsDry, currentAmountsDry);
+				currentItemsDry.clear();
+				currentAmountsDry.clear();
+			}
+		}
 	}
 	
 	public static void calcCost() {
