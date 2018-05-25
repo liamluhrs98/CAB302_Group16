@@ -141,7 +141,7 @@ public class deliveryMain {
 				lowestTemp = t.getTemp();
 			}
 		}
-		//Call getCostOrd() and getCostRe() using the quantity and temp
+		//Call getCostOrd() and getCostRe() using the quantity and temperature
 		double oCost = ordinaryTruck.getCostOrd(dryQuantity);
 		double rCost = refrigeratedTruck.getCostRe(lowestTemp);
 		double coldCost = 0;
