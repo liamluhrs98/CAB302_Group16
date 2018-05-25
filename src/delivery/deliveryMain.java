@@ -37,10 +37,10 @@ public class deliveryMain {
 	private static ArrayList<order> orderlist = new ArrayList<order>();
 	
 	//Truck Assigning Variables
-	private static ArrayList<String> cold_food = new ArrayList<String>();
-	private static ArrayList<Integer> cold_food_amount = new ArrayList<Integer>();
-	private static ArrayList<String> dry_food = new ArrayList<String>();
-	private static ArrayList<Integer> dry_food_amount = new ArrayList<Integer>();
+	private static ArrayList<String> coldFood = new ArrayList<String>();
+	private static ArrayList<Integer> coldFoodAmount = new ArrayList<Integer>();
+	private static ArrayList<String> dryFood = new ArrayList<String>();
+	private static ArrayList<Integer> dryFoodAmount = new ArrayList<Integer>();
 	
 	public static void importOrderCSV() {
 		//Import CSV
@@ -73,12 +73,12 @@ public class deliveryMain {
 		//Sort objects by temperature into cold food and dry food
 		for (int i = 0; i < names.size(); i++) {
 			if ( (names.get(i)).getTemp() != null) {
-				cold_food.add(names.get(i));
-				cold_food_amount.add(amountInts.get(i));
+				coldFood.add(names.get(i));
+				coldFoodAmount.add(amountInts.get(i));
 			}
 			else
-				dry_food.add(names.get(i));
-				dry_food_amount.add(amountInts.get(i));
+				dryFood.add(names.get(i));
+				dryFoodAmount.add(amountInts.get(i));
 		}
 		
 	}
@@ -97,7 +97,7 @@ public class deliveryMain {
 		ArrayList<String> dryItems = new ArrayList<String>();
 		ArrayList<Integer> dryItemA = new ArrayList<Integer>();
 		
-		while (cold_food.size() > 0) {
+		while (coldFood.size() > 0) {
 			//Add amount of cold trucks needed
 			if (currentquanc >= cq) {
 				coldCount += 1;
@@ -108,14 +108,22 @@ public class deliveryMain {
 				currentquanc += am;
 			}
 			//Add the items to the current trucks inventory
-			coldItems.add(cold_food.get(0));
-			coldItemA.add(cold_food_amount.get(0));
 			//Remove the item from the list after its been added
-			cold_food.remove(0);
-			cold_food_amount.remove(0);
+			
+			for (int i = 0; i < coldFood.size(); i++) {
+				if (currentquanc <= cq) {
+					coldItems.add(coldFood.get(i));
+				}
+				
+			}
+			
+			coldItems.add(coldFood.get(0));
+			coldItemA.add(coldFoodAmount.get(0));
+			coldFood.remove(0);
+			coldFoodAmount.remove(0);
 		}
 		
-		while (dry_food.size() > 0) {
+		while (dryFood.size() > 0) {
 			//Add amount of dry trucks needed
 			if (currentquand >= 0) {
 				dryCount += 1;
@@ -126,11 +134,11 @@ public class deliveryMain {
 				currentquand += am;
 			}
 			//Add items to the current trucks inventory
-			dryItems.add(dry_food.get(0));
-			dryItemA.add(dry_food_amount.get(0));
+			dryItems.add(dryFood.get(0));
+			dryItemA.add(dryFoodAmount.get(0));
 			//Remove the item from the list after its been added
-			dry_food.remove(0);
-			dry_food_amount.remove(0);
+			dryFood.remove(0);
+			dryFoodAmount.remove(0);
 		}
 		//Sort into cold truck, then into dry truck with leftovers
 	}
@@ -138,12 +146,12 @@ public class deliveryMain {
 	public static void calcCost() {
 		//Get total dry quantity
 		int dryQuantity = 0;
-		for (int q : dry_food_amount) {
+		for (int q : dryFoodAmount) {
 			dryQuantity += q;
 		}
-		//Get lowest temp in cold food
+		//Get lowest temperature in cold food
 		int lowestTemp = 10;
-		for (String t : cold_food) {
+		for (String t : coldFood) {
 			if (t.getTemp() < lowestTemp) {
 				lowestTemp = t.getTemp();
 			}
