@@ -7,7 +7,6 @@ package delivery;
  */
 
 public class ordinaryTruck extends truck {
-	public double oCost;
 	public int orCapacity = 1000;
 	private String name;
 	private String[] itemNames;
@@ -36,8 +35,8 @@ public class ordinaryTruck extends truck {
 		return orCapacity;
 	}
 	
-	public double getCostOrd(int totalQuantity) {
-		oCost = 750 + (0.25 * totalQuantity); 
+	public static double getCostOrd(int totalQuantity) {
+		double oCost = 750 + (0.25 * totalQuantity); 
 		return oCost;
 	}
 	

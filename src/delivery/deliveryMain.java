@@ -87,7 +87,8 @@ public class deliveryMain {
 		//Divide amounts into 800 for cold and 1000 for dry
 		int cq = 800;
 		int dq = 1000;
-		int currentquan = 0;
+		int currentquanc = 0;
+		int currentquand = 0;
 		int coldCount = 0;
 		int dryCount = 0;
 		
@@ -98,13 +99,13 @@ public class deliveryMain {
 		
 		while (cold_food.size() > 0) {
 			//Add amount of cold trucks needed
-			if (currentquan >= cq) {
+			if (currentquanc >= cq) {
 				coldCount += 1;
-				currentquan = 0;
+				currentquanc = 0;
 			}
 			//Sum of all the items in the current truck
 			for (Integer am: coldItemA) {
-				currentquan += am;
+				currentquanc += am;
 			}
 			//Add the items to the current trucks inventory
 			coldItems.add(cold_food.get(0));
@@ -114,6 +115,23 @@ public class deliveryMain {
 			cold_food_amount.remove(0);
 		}
 		
+		while (dry_food.size() > 0) {
+			//Add amount of dry trucks needed
+			if (currentquand >= 0) {
+				dryCount += 1;
+				currentquand = 0;
+			}
+			//Sum of all the items in the current truck
+			for (Integer am: dryItemA) {
+				currentquand += am;
+			}
+			//Add items to the current trucks inventory
+			dryItems.add(dry_food.get(0));
+			dryItemA.add(dry_food_amount.get(0));
+			//Remove the item from the list after its been added
+			dry_food.remove(0);
+			dry_food_amount.remove(0);
+		}
 		//Sort into cold truck, then into dry truck with leftovers
 	}
 	
@@ -131,8 +149,8 @@ public class deliveryMain {
 			}
 		}
 		//Call getCostOrd() and getCostRe() using the quantity and temp
-		//double oCost = ordinaryTruck.getCostOrd(dryQuantity);
-		//double rCost = refrigeratedTruck.getCostRe(lowestTemp);
+		double oCost = ordinaryTruck.getCostOrd(dryQuantity);
+		double rCost = refrigeratedTruck.getCostRe(lowestTemp);
 	}
 	
 	public static void createManifest() {

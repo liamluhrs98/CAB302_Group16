@@ -7,7 +7,6 @@ package delivery;
  */
 
 public class refrigeratedTruck extends truck {
-	public double rCost;
 	public int reCapacity = 800;
 	public String name;
 	private String[] itemNames;
@@ -36,8 +35,8 @@ public class refrigeratedTruck extends truck {
 		return reCapacity;
 	}
 	
-	public double getCostRe(int lowestTemp) {
-		rCost = 900 + 200 * Math.pow(0.7,(lowestTemp/5));
+	public static double getCostRe(int lowestTemp) {
+		double rCost = 900 + 200 * Math.pow(0.7,(lowestTemp/5));
 		return rCost;
 	}
 
