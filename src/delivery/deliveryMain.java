@@ -1,8 +1,11 @@
 package delivery;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -119,7 +122,7 @@ public class deliveryMain {
 				sum += quan;
 			}
 			
-			if (sum >= 800) {
+			if (sum >= 1000) {
 				ordinaryTruck newTruck = new ordinaryTruck("ordinary", currentItemsDry, currentAmountsDry);
 				currentItemsDry.clear();
 				currentAmountsDry.clear();
@@ -155,18 +158,37 @@ public class deliveryMain {
 		double totalCost = oCost + rCost + foodCost;
 	}
 	
-	public static void createManifest() {
+	public static void createManifest() throws IOException {
 		//Make Manifest CSV
 			//Refridge
 				//name, quantity
 			//Ordinary
 				//name, quantity
+		File file = new File("newManifest.csv");
+		FileWriter fw = new FileWriter(file);
+		BufferedWriter bw = new BufferedWriter(fw);
+		
+		bw.write(">Refrigerated");
+		bw.newLine();
+		for (int i = 0; i < names.size(); i++) {
+			bw.write(names.get(i) + ","+amountInts.get(i));
+			bw.newLine();
+		}
+		bw.write(">Ordinary");
+		bw.newLine();
+		for (int i = 0; i < names.size(); i++) {
+			bw.write(names.get(i) + ","+amountInts.get(i));
+			bw.newLine();
+		}
+		bw.close();
+		fw.close();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		importOrderCSV();
 		for (int i = 0; i < names.size(); i++) {
 			System.out.println(names.get(i) + "=" + amountInts.get(i));
 		}
+		createManifest();
 	}
 }
