@@ -8,10 +8,10 @@ public class item {
 	private int ret_price;		//Retail price of item
 	private int reord_point;	//Reordering point of item
 	private int reord_amt;		//Quantity to reorder of item, once reorder point is reached
-	private int temp;			//Temperature to store item at
+	private String temp;			//Temperature to store item at
 	
 	//Construct item object with variables
-	public item(String name, int manu_cost, int ret_price, int reord_point, int reord_amt, int temp) {
+	public item(String name, int manu_cost, int ret_price, int reord_point, int reord_amt, String temp) {
 		this.name = name;
 		this.manu_cost = manu_cost;
 		this.ret_price = ret_price;
@@ -41,7 +41,7 @@ public class item {
 		return this.reord_amt;
 	}
 	
-	public int getItemTemp() {
+	public String getItemTemp() {
 		return this.temp;
 	}
 	
