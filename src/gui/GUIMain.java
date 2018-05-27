@@ -1,5 +1,5 @@
 package gui;
-
+//Import
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,7 +21,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListener {
-	
+	//Initialise variables
 	public static boolean fileLoaded;
 	JPanel panel; 
 	JPanel IPpanel;
@@ -34,6 +34,8 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 	
 	public GUIMain(String title) {
 		super(title);
+		
+		//Set up main panel
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagConstraints c = new GridBagConstraints();
 		panel = new JPanel( new GridBagLayout() );
@@ -41,19 +43,22 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		IPpanel = new JPanel( new GridBagLayout() );
 		IPpanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
+		
+		//Panel settings
 		header = new JLabel("SuperMart Inventory Managment");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(header, c); 
 		
-		
+		//Capital label
 		capital = new JLabel("Capital = $" + stock.store.capital);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 0;
 		panel.add(capital, c);
 		
+		//Load Item Prop button
 		JButton ItemProp = new JButton("Load Item Properties");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -62,6 +67,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		ItemProp.addActionListener(this);
 		panel.add(ItemProp, c);
 		
+		//Display inventory button
 		JButton DisplayInventory = new JButton("Display Inventory");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -70,6 +76,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		DisplayInventory.addActionListener(this);
 		panel.add(DisplayInventory, c);
 		
+		//Create order button
 		JButton CreateOrder = new JButton("Create Order & Manifest");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
@@ -78,6 +85,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		CreateOrder.addActionListener(this);
 		panel.add(CreateOrder, c);
 		
+		//Load sales log button
 		JButton LoadSale = new JButton("Load Sales Log");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -86,6 +94,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		LoadSale.addActionListener(this);
 		panel.add(LoadSale, c);
 		
+		//Load Manifest button
 		JButton LoadManifest = new JButton("Load Manifest");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -94,6 +103,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		LoadManifest.addActionListener(this);
 		panel.add(LoadManifest, c);
 		
+		//Exit Button
 		JButton closeButton = new JButton("Exit Program");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
@@ -102,17 +112,22 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		closeButton.addActionListener(this);
 		panel.add(closeButton, c);
 		
+		//variables
 		getContentPane().setLayout(new GridBagLayout());
 		getContentPane().add(panel);
 		panel.setVisible(true);
 		fileLoaded = false;
 	}
 	
+	
+	//Set up actions for the buttons
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//for item proper
 		if (e.getActionCommand() == "DisplayItems") {
+			//if item prop has been imported
 			if (fileLoaded) {
-				
+				//Set up table
 				String[][] rowData = new String[stock.stockMain.names.size()+1][7];
 				rowData[0][0] = "ITEM NAME";
 				rowData[0][1] = "MANU. COST";
@@ -121,6 +136,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 				rowData[0][4] = "REORD. AMOUNT";
 				rowData[0][5] = "TEMPERATURE";
 				rowData[0][6] = "QUANTITY";
+				//set up data for table
 				for (int i = 1; i < stock.stockMain.names.size() + 1; i++) {
 					try {
 						rowData[i][0] = stock.stockMain.names.get(i-1);
@@ -138,7 +154,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 				String[] IPColumnNames = { "Item Name", "Manufacturing Cost", "Retail Price", "Reorder Point", "Reorder Amount", "Temperature", "Quantity" };
 				itemPropertiesTable = new JTable(rowData, IPColumnNames);
 				JTextField IPTableTitle = new JTextField("Item Properties");
-				
+				//Create table and add to new panel
 				JFrame IPFrame = new JFrame();
 				IPFrame.add(IPTableTitle);
 				IPFrame.remove(itemPropertiesTable);
@@ -149,52 +165,71 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 			}
 			
 		} else if (e.getActionCommand() == "LoadItemProp") {
-			stock.stockMain.ImportItemProp();
-			JOptionPane.showMessageDialog(getParent(), "Item Properties Successfully Imported.");
-			
-		} else if (e.getActionCommand() == "CreateOrder") {
-			try{
-				stock.stockMain.ExportOrder();
-				delivery.deliveryMain.runDelivery();
-				JOptionPane.showMessageDialog(getParent(), "Order Successfully Created.");
-			} catch(IOException ioe) {
-				JOptionPane.showMessageDialog(getParent(), "IO Exception when creating Order.");
+			//if item prop has been imported
+			if (fileLoaded) {
+				//do stockMain.ImportItemProp() function
+				stock.stockMain.ImportItemProp();
+				JOptionPane.showMessageDialog(getParent(), "Item Properties Successfully Imported.");
 			}
-			
+		} else if (e.getActionCommand() == "CreateOrder") {
+			//if item prop has been imported
+			if (fileLoaded) {
+				//Run ExportOrder() using stock package, then run runDelivery() from delivery function
+				try{
+					stock.stockMain.ExportOrder();
+					delivery.deliveryMain.runDelivery();
+					JOptionPane.showMessageDialog(getParent(), "Order Successfully Created.");
+				} catch(IOException ioe) {
+					JOptionPane.showMessageDialog(getParent(), "IO Exception when creating Order.");
+				}
+			}	
 		} else if (e.getActionCommand() == "LoadSale") {
-			stock.stockMain.ImportSalesLog();
-			JOptionPane.showMessageDialog(getParent(), "Sales Log Successfully Imported.");
-			panel.remove(capital);
-			capital.setText("Capital =  $" + stock.store.capital);
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 2;
-			c.gridy = 0;
-			panel.add(capital, c);
-			pack();
-			
+			//if item prop has been imported
+			if (fileLoaded) {
+				//Run ImportSalesLog() using stock package
+				stock.stockMain.ImportSalesLog();
+				JOptionPane.showMessageDialog(getParent(), "Sales Log Successfully Imported.");
+				
+				//Update capital label
+				panel.remove(capital);
+				capital.setText("Capital =  $" + stock.store.capital);
+				GridBagConstraints c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridx = 2;
+				c.gridy = 0;
+				panel.add(capital, c);
+				pack();
+			}
 		} else if (e.getActionCommand() == "LoadManifest") {
-			stock.stockMain.ImportManifest();
-			JOptionPane.showMessageDialog(getParent(), "Manifest Successfully Imported.");
-			panel.remove(capital);
-			capital.setText("Capital = $" + stock.store.capital);
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 2;
-			c.gridy = 0;
-			panel.add(capital, c);
-			pack();
-			
+			//if item prop has been imported
+			if (fileLoaded) {
+				//Run ImportManifest() function from stock package
+				stock.stockMain.ImportManifest();
+				JOptionPane.showMessageDialog(getParent(), "Manifest Successfully Imported.");
+				//Update capital label
+				panel.remove(capital);
+				capital.setText("Capital = $" + stock.store.capital);
+				GridBagConstraints c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridx = 2;
+				c.gridy = 0;
+				panel.add(capital, c);
+				pack();
+			}	
 		} else if (e.getActionCommand() == "Close"){
+			//Close the program
 			System.exit(0);
 			
+			
 		} else {
-			JOptionPane.showMessageDialog(getParent(), "Please select a valid log file");
+			//Ask user to load in item properties
+			JOptionPane.showMessageDialog(getParent(), "Please load an item properties file.");
 		}
 	}
 	
 	@Override
 	public void run() {
+		//Run
 		setPreferredSize(new Dimension(678, 250));
 		setLocation(new Point(100, 100));
 		pack();
