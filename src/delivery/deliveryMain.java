@@ -39,6 +39,9 @@ public class deliveryMain {
 	private static ArrayList<String> names = new ArrayList<String>();
 	private static ArrayList<order> orderlist = new ArrayList<order>();
 	private static ArrayList<String> temp = new ArrayList<String>();
+	private static ArrayList<Integer> manuAmount = new ArrayList<Integer>();
+	private static double manuCost = 0;
+	private static double totalCost = 0;
 	
 	//Truck Assigning Variables
 	private static ArrayList<String> coldFood = new ArrayList<String>();
@@ -59,12 +62,12 @@ public class deliveryMain {
 	          while ((line = br.readLine()) != null) {	        	  	
 	        	  	// use comma as separator
 		            String[] importedCSV = line.split(csvSplitBy);
-		            String[] ts = new String[importedCSV[0].length()];
 		            
 		            names.add(importedCSV[0]);
 		            amountInts.add(d_StringToInt(importedCSV[1]));  
 		            temp.add(importedCSV[2]);
-		                
+		            manuAmount.add(d_StringToInt(importedCSV[3]));
+		            
 		            for (int i = 0; i < amountInts.size(); i++) {
 		              orderlist.add(new order(names, amountInts));
 		            }	            
@@ -166,26 +169,14 @@ public class deliveryMain {
 				lowestTemp = t;
 			}
 		}
-		
-		for (String t : coldFood) {
-			if (t.getTemp() < lowestTemp) {
-				lowestTemp = t.getTemp();
-			}
-		}
 		//Call getCostOrd() and getCostRe() using the quantity and temperature
 		double oCost = ordinaryTruck.getCostOrd(dryQuantity);
 		double rCost = refrigeratedTruck.getCostRe(lowestTemp);
-		double coldCost = 0;
-		double dryCost = 0;
-		for (String item: coldFood) {
-			coldCost += item.getCost();
+		for (int i = 0; i < amountInts.size(); i++) {
+        	manuCost += (amountInts.get(i) * manuAmount.get(i));
+        }
+		double totalCost = oCost + rCost + manuCost;
 		}
-		for (String item: dryFood) {
-			dryCost += item.getCost();
-		}
-		double foodCost = coldCost + dryCost;
-		double totalCost = oCost + rCost + foodCost;
-	}
 	
 	public static void createManifest() throws IOException {
 		//Make Manifest CSV
@@ -216,9 +207,14 @@ public class deliveryMain {
 	public static void main(String[] args) throws IOException {
 		importOrderCSV();
 		sortFood();
+		calcCost();
+		createManifest();
+		
 		for (int i = 0; i < names.size(); i++) {
 			System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
 		}
-		createManifest();
+		
+		System.out.println("Manufactoring cost of food is = " + manuCost);
+		System.out.println("Total cost is = " + totalCost);
 	}
 }
