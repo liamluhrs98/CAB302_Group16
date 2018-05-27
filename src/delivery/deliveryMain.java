@@ -20,13 +20,10 @@ import stock.item;
 
 public class deliveryMain {
 	
-	//String ArrayList to Integer ArrayList Method
+	//String to Integer Array Method
 	public static int d_StringToInt(String a){
-	    //ArrayList<Integer> b = new ArrayList<Integer>();
 	    int b = 0;
-		//for (String stringValue : a) {
 	    	try {
-	    		//b.add(Integer.parseInt(stringValue));
 	    		b = Integer.parseInt(a);
 	    	} catch(NumberFormatException nfe) {
 	    		System.out.println("Could not parse " + a + " as an integer, please check CSV.");
@@ -40,6 +37,8 @@ public class deliveryMain {
 	private static ArrayList<order> orderlist = new ArrayList<order>();
 	private static ArrayList<String> temp = new ArrayList<String>();
 	private static ArrayList<Integer> manuAmount = new ArrayList<Integer>();
+	
+	//Cost Variables
 	private static double manuCost = 0;
 	private static double totalCost = 0;
 	
@@ -62,7 +61,7 @@ public class deliveryMain {
 	          while ((line = br.readLine()) != null) {	        	  	
 	        	  	// use comma as separator
 		            String[] importedCSV = line.split(csvSplitBy);
-		            
+		//Sort item name, amount, cost and temperature into their own ArrayLists, converting Strings to Ints.
 		            names.add(importedCSV[0]);
 		            amountInts.add(d_StringToInt(importedCSV[1]));  
 		            temp.add(importedCSV[2]);
@@ -84,10 +83,12 @@ public class deliveryMain {
 		String n = "NULL";
 		//Sort objects by temperature into cold food and dry food
 		for (int i = 0; i < names.size(); i++) {
+			//if temperature is null put item into dry food
 			if ( temp.get(i).equals(n)) {
 				dryFood.add(names.get(i));
 				dryFoodAmount.add(amountInts.get(i));
 			} else
+				//if item has temperature requirement put item into cold food
 				coldFood.add(names.get(i));
 				coldFoodAmount.add(amountInts.get(i));
 		}
@@ -116,7 +117,7 @@ public class deliveryMain {
 			}
 			
 			if (sum >= 800) {
-				refrigeratedTruck newTruck = new refrigeratedTruck("refrigerated", currentItemsCold, currentAmountsCold);
+				refrigeratedTruck newTruck1 = new refrigeratedTruck("refrigerated", currentItemsCold, currentAmountsCold);
 				currentItemsCold.clear();
 				currentAmountsCold.clear();
 			}
@@ -131,7 +132,7 @@ public class deliveryMain {
 			}
 			
 			if (sum >= 1000) {
-				ordinaryTruck newTruck = new ordinaryTruck("ordinary", currentItemsDry, currentAmountsDry);
+				ordinaryTruck newTruck2 = new ordinaryTruck("ordinary", currentItemsDry, currentAmountsDry);
 				currentItemsDry.clear();
 				currentAmountsDry.clear();
 			}
@@ -172,6 +173,7 @@ public class deliveryMain {
 		//Call getCostOrd() and getCostRe() using the quantity and temperature
 		double oCost = ordinaryTruck.getCostOrd(dryQuantity);
 		double rCost = refrigeratedTruck.getCostRe(lowestTemp);
+		//Calculate total manufacturing cost using manufacturing amount and item amounts
 		for (int i = 0; i < amountInts.size(); i++) {
         	manuCost += (amountInts.get(i) * manuAmount.get(i));
         }
@@ -180,20 +182,19 @@ public class deliveryMain {
 	
 	public static void createManifest() throws IOException {
 		//Make Manifest CSV
-			//Refridge
-				//name, quantity
-			//Ordinary
-				//name, quantity
 		File file = new File("manifest_0.csv");
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
-		
+		//Refridge
+		//name, quantity
 		bw.write(">Refrigerated");
 		bw.newLine();
 		for (int i = 0; i < coldFood.size(); i++) {
 			bw.write(coldFood.get(i) + "," + coldFoodAmount.get(i));
 			bw.newLine();
 		}
+		//Ordinary
+		//name, quantity
 		bw.write(">Ordinary");
 		bw.newLine();
 		for (int i = 0; i < dryFood.size(); i++) {
@@ -209,7 +210,7 @@ public class deliveryMain {
 		sortFood();
 		calcCost();
 		createManifest();
-		
+		//stock.updateCapital(totalCost);
 		for (int i = 0; i < names.size(); i++) {
 			System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
 		}
