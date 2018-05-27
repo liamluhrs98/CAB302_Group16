@@ -7,7 +7,7 @@ import exceptions.deliveryExceptions;
 
 /**
  * 
- * This class tests the classes in the delviery package.
+ * This class tests the classes in the delivery package.
  * 
  * @author harry
  *
@@ -16,7 +16,7 @@ import exceptions.deliveryExceptions;
 public class deliveryTests {
 	
 	@Test
-	public void ValidOrder() throws deliveryExceptions {
+	public void ValidOrder() {
 		
 	}
 	
