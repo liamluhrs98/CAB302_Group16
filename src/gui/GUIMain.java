@@ -70,10 +70,10 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		DisplayInventory.addActionListener(this);
 		panel.add(DisplayInventory, c);
 		
-		JButton CreateOrder = new JButton("Create Order");
+		JButton CreateOrder = new JButton("Create Order & Manifest");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 3;
+		c.gridx = 2;
+		c.gridy = 2;
 		CreateOrder.setActionCommand("CreateOrder");
 		CreateOrder.addActionListener(this);
 		panel.add(CreateOrder, c);
@@ -88,7 +88,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		
 		JButton LoadManifest = new JButton("Load Manifest");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
+		c.gridx = 0;
 		c.gridy = 3;
 		LoadManifest.setActionCommand("LoadManifest");
 		LoadManifest.addActionListener(this);
@@ -96,8 +96,8 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		
 		JButton closeButton = new JButton("Exit Program");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 4;
+		c.gridx = 2;
+		c.gridy = 3;
 		closeButton.setActionCommand("Close");
 		closeButton.addActionListener(this);
 		panel.add(closeButton, c);
