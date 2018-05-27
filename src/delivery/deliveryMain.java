@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import stock.item;
-
 /**
  * 
  * @author Harrison Perkins
@@ -215,6 +213,7 @@ public class deliveryMain {
 		}
 		bw.close();
 		fw.close();
+		//store.UpdateCapital(totalCost);
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -222,7 +221,6 @@ public class deliveryMain {
 		sortFood();
 		calcCost();
 		createManifest();
-		//stock.updateCapital(totalCost);
 		for (int i = 0; i < names.size(); i++) {
 			System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
 		}
