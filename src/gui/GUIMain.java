@@ -29,7 +29,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 	JLabel capital;
 	JTable itemPropertiesTable;
 	JTable inventoryTable;
-	
+	//Decimal Place rounding variable
 	DecimalFormat df = new DecimalFormat("##.00");
 	
 	public GUIMain(String title) {
@@ -44,21 +44,21 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		IPpanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		
-		//Panel settings
+		//Panel settings creation and positioning
 		header = new JLabel("SuperMart Inventory Managment");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(header, c); 
 		
-		//Capital label
+		//Capital label creation and positioning
 		capital = new JLabel("Capital = $" + stock.store.capital);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 0;
 		panel.add(capital, c);
 		
-		//Load Item Prop button
+		//Load Item Prop button creation and positioning
 		JButton ItemProp = new JButton("Load Item Properties");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -67,7 +67,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		ItemProp.addActionListener(this);
 		panel.add(ItemProp, c);
 		
-		//Display inventory button
+		//Display inventory button creation and positioning
 		JButton DisplayInventory = new JButton("Display Inventory");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -76,7 +76,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		DisplayInventory.addActionListener(this);
 		panel.add(DisplayInventory, c);
 		
-		//Create order button
+		//Create order button creation and positioning
 		JButton CreateOrder = new JButton("Create Order & Manifest");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
@@ -85,7 +85,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		CreateOrder.addActionListener(this);
 		panel.add(CreateOrder, c);
 		
-		//Load sales log button
+		//Load sales log button creation and positioning
 		JButton LoadSale = new JButton("Load Sales Log");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -94,7 +94,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		LoadSale.addActionListener(this);
 		panel.add(LoadSale, c);
 		
-		//Load Manifest button
+		//Load Manifest button creation and positioning
 		JButton LoadManifest = new JButton("Load Manifest");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -103,7 +103,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		LoadManifest.addActionListener(this);
 		panel.add(LoadManifest, c);
 		
-		//Exit Button
+		//Exit Button creation and positioning
 		JButton closeButton = new JButton("Exit Program");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
