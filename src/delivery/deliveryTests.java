@@ -1,9 +1,5 @@
 package delivery;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-
-import exceptions.deliveryExceptions;
 
 /**
  * 
@@ -15,50 +11,5 @@ import exceptions.deliveryExceptions;
 
 public class deliveryTests {
 	
-	@Test
-	public void validOrder() throws deliveryExceptions {
-		
-	}
 	
-	@Test
-	public void invalidType() throws deliveryExceptions {
-		
-	}
-	
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
-	
-	@Test
-	public void  throws deliveryExceptions {
-		
-	}
 }
