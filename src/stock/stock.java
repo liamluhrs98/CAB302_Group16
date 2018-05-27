@@ -5,14 +5,20 @@ import java.util.*;
 
 public class stock {
 	
-	private HashMap<String, Integer> stock_map;
+	static private HashMap<String, Integer> stock_map = new HashMap<String, Integer>();
 		
-	public int getQuantity(String name) {
+	public static int getQuantity(String name) {
 		return stock_map.get(name);
 	}
 	
-	public void changeAmount(stock map_name, String name, int amount) {
-		map_name.stock_map.put(name, amount);
+	public static HashMap<String, Integer> getHashMap() {
+		return stock_map;
+	}
+	
+	public static void changeAmount(stock map_name, String name, int amount) {
+		int currentAmount = map_name.stock_map.get(name);
+		
+		map_name.stock_map.put(name, currentAmount + amount);
 	}
 	
 }

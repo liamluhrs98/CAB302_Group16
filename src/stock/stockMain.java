@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class stockMain {
@@ -16,10 +17,19 @@ public class stockMain {
     private static ArrayList<Integer> reord_point = new ArrayList<Integer>();
     private static ArrayList<Integer> reord_amt = new ArrayList<Integer>();
     private static ArrayList<String> temp = new ArrayList<String>();
-        
+       
+    static DecimalFormat df = new DecimalFormat("##.00");
+    
+    private static double capital = 0;
+    
+    static stock quantities = new stock();
     
     private static int orderNumber = 0;
     private static int manifestNumber = 0;
+
+    public static void initialiseVariables() {
+    	store supermart = store.store();
+    }
     
     //String ArrayList to Integer ArrayList Method
     public static int s_StrToInt(String a){
@@ -64,6 +74,11 @@ public class stockMain {
         } catch (IOException ioe) {
         	System.out.println("IOException");
             ioe.printStackTrace();
+        }
+        
+        HashMap<String, Integer> quantities = stock.getHashMap();
+        for (int i = 0; i < names.size(); i++) {
+        	quantities.put(names.get(i), 0);
         }
     }
 	
@@ -171,7 +186,7 @@ public class stockMain {
 		}
 	}
 	
-	public void ImportManifest() {
+	public static void ImportManifest() {
 		String manifest_location = "C:/Users/liaml/Desktop/302 Files/manifest_" + manifestNumber + ".csv";
         String line = "";
         String csvSplitBy = ",";
@@ -186,9 +201,11 @@ public class stockMain {
                 String[] entry = line.split(csvSplitBy);
                 
                 if (entry[0] != ">Refridgerated" && entry[0] != ">Ordinary") {
-                	int i = entry[0] = ;
-                	
-                	
+                	try {
+                	stock.changeAmount(quantities, entry[0], s_StrToInt(entry[1]));
+                	} catch(ArrayIndexOutOfBoundsException oob) { 
+                		
+                	}
                 }
             }
         } catch (IOException ioe) {
@@ -198,21 +215,21 @@ public class stockMain {
         
 	}
 	
-	public void ImportSalesLog() {
+	public static void UpdateCapital(double amount) {
+		double currentCapital = store.capital;
+		DecimalFormat df = new DecimalFormat("##.00");
+		store.capital = currentCapital + amount;
+		//store.capital = df.format(store.capital);
 		
 	}
 	
-	public void UpdateCapital() {
-	
+	public void ImportSalesLog() {
+		
 	}
 	
 	public void CurrentStock() {
 		//return stock
 	}	
-	
-	public void CreateOrder() {
-		
-	}
 	
 	public static void ExportOrder() throws IOException {
         //Make Order CSV
@@ -234,8 +251,16 @@ public class stockMain {
 
 	
 	public static void main(String[] args) throws IOException {
+		
+		initialiseVariables();
 		ImportItemProp();
 		ExportOrder();
+		ImportManifest();
+		System.out.println(store.capital);
+		System.out.println(store.store_name);
+        store.UpdateInventory();
+		System.out.println(store.inventory);
+		
 	}
 
 
