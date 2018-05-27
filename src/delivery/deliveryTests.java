@@ -15,9 +15,5 @@ import exceptions.deliveryExceptions;
 
 public class deliveryTests {
 	
-	@Test
-	public void ValidOrder() {
-		
-	}
 	
 }
