@@ -221,12 +221,12 @@ public class deliveryMain {
 		sortFood();
 		calcCost();
 		createManifest();
-		for (int i = 0; i < names.size(); i++) {
-			System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
-		}
+		//for (int i = 0; i < names.size(); i++) {
+			//System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
+		//}
 		
-		System.out.println("Manufactoring cost of food is = " + manuCost);
-		DecimalFormat f = new DecimalFormat("##.00");
-		System.out.println("Total cost is = " + f.format(totalCost));
+		//System.out.println("Manufactoring cost of food is = " + manuCost);
+		//DecimalFormat f = new DecimalFormat("##.00");
+		//System.out.println("Total cost is = " + f.format(totalCost));
 	}
 }
