@@ -94,6 +94,14 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		LoadManifest.addActionListener(this);
 		panel.add(LoadManifest, c);
 		
+		JButton closeButton = new JButton("Exit Program");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 4;
+		closeButton.setActionCommand("Close");
+		closeButton.addActionListener(this);
+		panel.add(closeButton, c);
+		
 		getContentPane().setLayout(new GridBagLayout());
 		getContentPane().add(panel);
 		panel.setVisible(true);
@@ -139,9 +147,11 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 				IPFrame.pack();
 				IPFrame.setVisible(true);
 			}
+			
 		} else if (e.getActionCommand() == "LoadItemProp") {
 			stock.stockMain.ImportItemProp();
 			JOptionPane.showMessageDialog(getParent(), "Item Properties Successfully Imported.");
+			
 		} else if (e.getActionCommand() == "CreateOrder") {
 			try{
 				stock.stockMain.ExportOrder();
@@ -152,7 +162,6 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 			}
 			
 		} else if (e.getActionCommand() == "LoadSale") {
-			
 			stock.stockMain.ImportSalesLog();
 			JOptionPane.showMessageDialog(getParent(), "Sales Log Successfully Imported.");
 			panel.remove(capital);
@@ -175,6 +184,10 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 			c.gridy = 0;
 			panel.add(capital, c);
 			pack();
+			
+		} else if (e.getActionCommand() == "Close"){
+			System.exit(0);
+			
 		} else {
 			JOptionPane.showMessageDialog(getParent(), "Please select a valid log file");
 		}
@@ -189,62 +202,3 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 	}
 
 }
-
-//else if (e.getActionCommand() == "displayInfo") {
-	//if (fileLoaded) {
-		//String[][] rowData = new String[restaurant.getNumCustomerOrders() + 1][6];
-		//rowData[0][0] = "Customer Name";
-		//rowData[0][1] = "Mobile Number";
-		//rowData[0][2] = "Customer Type";
-		//rowData[0][3] = "X Location";
-		//rowData[0][4] = "Y Location";
-		//rowData[0][5] = "Delivery Distance";
-		//for (int i = 1; i < (restaurant.getNumCustomerOrders() + 1); i++) {
-			//try {
-				//rowData[i][0] = restaurant.getCustomerByIndex(i - 1).getName();
-				//rowData[i][1] = restaurant.getCustomerByIndex(i - 1).getMobileNumber();
-				//rowData[i][2] = restaurant.getCustomerByIndex(i - 1).getCustomerType();
-				//rowData[i][3] = Integer.toString(restaurant.getCustomerByIndex(i - 1).getLocationX());
-				//rowData[i][4] = Integer.toString(restaurant.getCustomerByIndex(i - 1).getLocationY());
-				//rowData[i][5] = Double.toString(restaurant.getCustomerByIndex(i - 1).getDeliveryDistance());
-			//} catch (Exception e1) {
-				//handleException(e1);
-			//}
-		//}
-		//String[] customerColumnNames = { "Customer Name", "Mobile Number", "Customer Type", "X Location",
-			//	"Y Location", "Delivery Distance" };
-	//	customerTable = new JTable(rowData, customerColumnNames);
-	//	rowData = new String[restaurant.getNumPizzaOrders() + 1][5];
-		//rowData[0][0] = "Pizza Type";
-		//rowData[0][1] = "Quantity";
-		//rowData[0][2] = "Order Price";
-		//rowData[0][3] = "Order Cost";
-		///rowData[0][4] = "Order Profit";
-		//for (int i = 1; i < (restaurant.getNumPizzaOrders() + 1); i++) {
-			//try {
-				//rowData[i][0] = restaurant.getPizzaByIndex(i - 1).getPizzaType();
-				//rowData[i][1] = Integer.toString(restaurant.getPizzaByIndex(i - 1).getQuantity());
-				//rowData[i][2] = Double.toString(restaurant.getPizzaByIndex(i - 1).getOrderPrice());
-				//rowData[i][3] = Double.toString(restaurant.getPizzaByIndex(i - 1).getOrderCost());
-			//	rowData[i][4] = Double.toString(restaurant.getPizzaByIndex(i - 1).getOrderProfit());
-		//	} catch (Exception e1) {
-				//handleException(e1);
-			//}
-		//}
-		//String[] pizzaColumnNames = { "Pizza Type", "Quantity", "Order Price", "Order Cost", "Order Profit" };
-		//pizzaTable = new JTable(rowData, pizzaColumnNames);
-		//JTextField customerTableTitle = new JTextField("Customer Details");
-		//JTextField pizzaTableTitle = new JTextField("Pizza Details");
-		//dataPanel.add(customerTableTitle);
-		//dataPanel.add(customerTable);
-		//dataPanel.add(pizzaTableTitle);
-		//dataPanel.add(pizzaTable);
-		//dataPanel.remove(fileLoadedText);
-		//getContentPane().remove(dataPanel);
-		//getContentPane().add(dataPanel);
-		//setPreferredSize(new Dimension(678, 250));
-		//pack();
-	//	setVisible(true);
-//	} else {
-		//JOptionPane.showMessageDialog(getParent(), "Please select a valid log file");
-	//}
