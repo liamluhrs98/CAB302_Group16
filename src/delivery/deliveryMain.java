@@ -174,6 +174,7 @@ public class deliveryMain {
         }
 		
 		totalCost = oCost + rCost + manuCost;
+		totalCost = -totalCost;
 		}
 	
 	public static void createManifest() throws IOException {
