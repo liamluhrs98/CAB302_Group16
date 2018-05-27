@@ -38,6 +38,7 @@ public class deliveryMain {
 	private static ArrayList<Integer> amountInts = new ArrayList<Integer>();
 	private static ArrayList<String> names = new ArrayList<String>();
 	private static ArrayList<order> orderlist = new ArrayList<order>();
+	private static ArrayList<String> temp = new ArrayList<String>();
 	
 	//Truck Assigning Variables
 	private static ArrayList<String> coldFood = new ArrayList<String>();
@@ -46,9 +47,10 @@ public class deliveryMain {
 	private static ArrayList<Integer> dryFoodAmount = new ArrayList<Integer>();
 	
 	public static void importOrderCSV() {
+		int orderNo = 0;
 		//Import CSV
 		//Sort into object/array
-		String csvfile = "C:/Users/harry/Desktop/sales_log_0.csv";
+		String csvfile = "C:/Users/harry/Desktop/order_"+ orderNo +".csv";
 		String line = "";
 		String csvSplitBy = ",";
 		
@@ -57,9 +59,11 @@ public class deliveryMain {
 	          while ((line = br.readLine()) != null) {	        	  	
 	        	  	// use comma as separator
 		            String[] importedCSV = line.split(csvSplitBy);
+		            String[] ts = new String[importedCSV[0].length()];
 		            
 		            names.add(importedCSV[0]);
-		            amountInts.add(d_StringToInt(importedCSV[1]));              
+		            amountInts.add(d_StringToInt(importedCSV[1]));  
+		            temp.add(importedCSV[2]);
 		                
 		            for (int i = 0; i < amountInts.size(); i++) {
 		              orderlist.add(new order(names, amountInts));
@@ -70,18 +74,19 @@ public class deliveryMain {
 		    } catch (IOException e) {
 		    	e.printStackTrace();
 		 }
+		orderNo += 1;
 	}
 	
 	public static void sortFood() {
+		String n = "NULL";
 		//Sort objects by temperature into cold food and dry food
 		for (int i = 0; i < names.size(); i++) {
-			if ( (names.get(i)).getTemp() != null) {
-				coldFood.add(names.get(i));
-				coldFoodAmount.add(amountInts.get(i));
-			}
-			else
+			if ( temp.get(i).equals(n)) {
 				dryFood.add(names.get(i));
 				dryFoodAmount.add(amountInts.get(i));
+			} else
+				coldFood.add(names.get(i));
+				coldFoodAmount.add(amountInts.get(i));
 		}
 	}
 	
@@ -138,6 +143,30 @@ public class deliveryMain {
 		}
 		//Get lowest temperature in cold food
 		int lowestTemp = 10;
+		int tempCounter = 0;
+		String[] ts = temp.toArray(new String[temp.size()]);
+		for (int i = 0; i < ts.length; i++) {
+			if (ts[i] != "NULL") {
+				tempCounter += 1;
+			}
+		}
+		
+		int[] tss = new int[tempCounter];
+		int tempCounter2 = 0;
+		
+		for (int i = 0; i < ts.length; i++ ) {
+			if (ts[i] != "NULL") {
+				tss[tempCounter2] = d_StringToInt(ts[i]);
+				tempCounter2 += 1;
+			}
+		}
+		
+		for (Integer t: tss) {
+			if (t <= lowestTemp) {
+				lowestTemp = t;
+			}
+		}
+		
 		for (String t : coldFood) {
 			if (t.getTemp() < lowestTemp) {
 				lowestTemp = t.getTemp();
@@ -164,20 +193,20 @@ public class deliveryMain {
 				//name, quantity
 			//Ordinary
 				//name, quantity
-		File file = new File("newManifest.csv");
+		File file = new File("manifest_0.csv");
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		
 		bw.write(">Refrigerated");
 		bw.newLine();
-		for (int i = 0; i < names.size(); i++) {
-			bw.write(names.get(i) + ","+amountInts.get(i));
+		for (int i = 0; i < coldFood.size(); i++) {
+			bw.write(coldFood.get(i) + "," + coldFoodAmount.get(i));
 			bw.newLine();
 		}
 		bw.write(">Ordinary");
 		bw.newLine();
-		for (int i = 0; i < names.size(); i++) {
-			bw.write(names.get(i) + ","+amountInts.get(i));
+		for (int i = 0; i < dryFood.size(); i++) {
+			bw.write(dryFood.get(i) + "," + dryFoodAmount.get(i));
 			bw.newLine();
 		}
 		bw.close();
@@ -186,8 +215,9 @@ public class deliveryMain {
 	
 	public static void main(String[] args) throws IOException {
 		importOrderCSV();
+		sortFood();
 		for (int i = 0; i < names.size(); i++) {
-			System.out.println(names.get(i) + "=" + amountInts.get(i));
+			System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
 		}
 		createManifest();
 	}
