@@ -119,7 +119,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 				rowData[0][2] = "RET. PRICE";
 				rowData[0][3] = "REORD. POINT";
 				rowData[0][4] = "REORD. AMOUNT";
-				rowData[0][5] = "TEMP";
+				rowData[0][5] = "TEMPERATURE";
 				rowData[0][6] = "QUANTITY";
 				for (int i = 1; i < stock.stockMain.names.size() + 1; i++) {
 					try {
@@ -165,7 +165,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 			stock.stockMain.ImportSalesLog();
 			JOptionPane.showMessageDialog(getParent(), "Sales Log Successfully Imported.");
 			panel.remove(capital);
-			capital.setText("Capital = $" + stock.store.capital);
+			capital.setText("Capital =  $" + stock.store.capital);
 			GridBagConstraints c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 2;
