@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import stock.item;
@@ -159,7 +160,7 @@ public class deliveryMain {
 		int tempCounter2 = 0;
 		
 		for (int i = 0; i < ts.length; i++ ) {
-			if (ts[i] != "NULL") {
+			if (!ts[i].equals("NULL")) {
 				tss[tempCounter2] = d_StringToInt(ts[i]);
 				tempCounter2 += 1;
 			}
@@ -177,7 +178,8 @@ public class deliveryMain {
 		for (int i = 0; i < amountInts.size(); i++) {
         	manuCost += (amountInts.get(i) * manuAmount.get(i));
         }
-		double totalCost = oCost + rCost + manuCost;
+		
+		totalCost = oCost + rCost + manuCost;
 		}
 	
 	public static void createManifest() throws IOException {
@@ -216,6 +218,7 @@ public class deliveryMain {
 		}
 		
 		System.out.println("Manufactoring cost of food is = " + manuCost);
-		System.out.println("Total cost is = " + totalCost);
+		DecimalFormat f = new DecimalFormat("##.00");
+		System.out.println("Total cost is = " + f.format(totalCost));
 	}
 }
