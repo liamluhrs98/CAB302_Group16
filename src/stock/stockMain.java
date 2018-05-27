@@ -19,6 +19,7 @@ public class stockMain {
         
     
     private static int orderNumber = 0;
+    private static int manifestNumber = 0;
     
     //String ArrayList to Integer ArrayList Method
     public static int s_StrToInt(String a){
@@ -170,6 +171,36 @@ public class stockMain {
 		}
 	}
 	
+	public void ImportManifest() {
+		String manifest_location = "C:/Users/liaml/Desktop/302 Files/manifest_" + manifestNumber + ".csv";
+        String line = "";
+        String csvSplitBy = ",";
+
+        manifestNumber = manifestNumber + 1;
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(manifest_location))) {
+
+            while ((line = br.readLine()) != null) {
+            	
+                //Split on comma (as its a csv)
+                String[] entry = line.split(csvSplitBy);
+                
+                if (entry[0] != ">Refridgerated" && entry[0] != ">Ordinary") {
+                	int i = entry[0] = ;
+                	
+                	
+                }
+            }
+        } catch (IOException ioe) {
+        	System.out.println("IOException");
+            ioe.printStackTrace();
+        }
+        
+	}
+	
+	public void ImportSalesLog() {
+		
+	}
 	
 	public void UpdateCapital() {
 	
@@ -177,11 +208,7 @@ public class stockMain {
 	
 	public void CurrentStock() {
 		//return stock
-	}
-	
-	public void ImportSalesLog() {
-		
-	}
+	}	
 	
 	public void CreateOrder() {
 		
@@ -198,7 +225,7 @@ public class stockMain {
         orderNumber = orderNumber + 1;
 
         for (int i = 0; i < names.size(); i++) {
-            bw.write(names.get(i) + "," + reord_amt.get(i) + "," + temp.get(i));
+            bw.write(names.get(i) + "," + reord_amt.get(i) + "," + temp.get(i) + "," + manu_cost.get(i));
             bw.newLine();
         }
         bw.close();
@@ -208,9 +235,6 @@ public class stockMain {
 	
 	public static void main(String[] args) throws IOException {
 		ImportItemProp();
-		for (int i = 0; i < names.size(); i++) {
-			System.out.println(names.get(i) + " : " + manu_cost.get(i) + " : " + ret_price.get(i) + " : " + reord_point.get(i) + " : " + reord_amt.get(i) + " : " + temp.get(i));
-		}
 		ExportOrder();
 	}
 

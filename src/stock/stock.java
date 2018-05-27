@@ -1,23 +1,18 @@
 package stock;
 
+import java.util.*;
 
 
 public class stock {
 	
-	private String itemName;
-	private int itemQuantity;
+	private HashMap<String, Integer> stock_map;
 		
-	public stock(String itemName, int itemQuantity) {
-		this.itemName = itemName;
-		this.itemQuantity = itemQuantity;
+	public int getQuantity(String name) {
+		return stock_map.get(name);
 	}
 	
-	public String getStockItemName() {
-		return this.itemName;
-	}
-	
-	public int getStockItemQuantity() {
-		return this.itemQuantity;
+	public void changeAmount(stock map_name, String name, int amount) {
+		map_name.stock_map.put(name, amount);
 	}
 	
 }
