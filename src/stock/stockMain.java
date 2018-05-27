@@ -11,12 +11,12 @@ import java.util.*;
 
 public class stockMain {
 	
-    private static ArrayList<String> names = new ArrayList<String>();
-    private static ArrayList<Integer> manu_cost = new ArrayList<Integer>();
-    private static ArrayList<Integer> ret_price = new ArrayList<Integer>();
-    private static ArrayList<Integer> reord_point = new ArrayList<Integer>();
-    private static ArrayList<Integer> reord_amt = new ArrayList<Integer>();
-    private static ArrayList<String> temp = new ArrayList<String>();
+    public static ArrayList<String> names = new ArrayList<String>();
+    public static ArrayList<Integer> manu_cost = new ArrayList<Integer>();
+    public static ArrayList<Integer> ret_price = new ArrayList<Integer>();
+    public static ArrayList<Integer> reord_point = new ArrayList<Integer>();
+    public static ArrayList<Integer> reord_amt = new ArrayList<Integer>();
+    public static ArrayList<String> temp = new ArrayList<String>();
        
     static DecimalFormat df = new DecimalFormat("##.00");
       
