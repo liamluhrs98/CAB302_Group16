@@ -112,7 +112,6 @@ public class deliveryMain {
 			}
 			
 			if (sum >= 800) {
-				refrigeratedTruck newTruck1 = new refrigeratedTruck("refrigerated", currentItemsCold, currentAmountsCold);
 				currentItemsCold.clear();
 				currentAmountsCold.clear();
 			}
@@ -127,7 +126,6 @@ public class deliveryMain {
 			}
 			
 			if (sum >= 1000) {
-				ordinaryTruck newTruck2 = new ordinaryTruck("ordinary", currentItemsDry, currentAmountsDry);
 				currentItemsDry.clear();
 				currentAmountsDry.clear();
 			}
@@ -222,12 +220,12 @@ public class deliveryMain {
 		sortFood();
 		calcCost();
 		createManifest();
-		//for (int i = 0; i < names.size(); i++) {
-			//System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
-		//}
+		for (int i = 0; i < names.size(); i++) {
+			System.out.println(names.get(i) + "=" + amountInts.get(i) + "=" + temp.get(i));
+		}
 		
-		//System.out.println("Manufactoring cost of food is = " + manuCost);
-		//DecimalFormat f = new DecimalFormat("##.00");
-		//System.out.println("Total cost is = " + f.format(totalCost));
+		System.out.println("Manufactoring cost of food is = " + manuCost);
+		DecimalFormat f = new DecimalFormat("##.00");
+		System.out.println("Total cost is = " + f.format(totalCost));
 	}
 }
