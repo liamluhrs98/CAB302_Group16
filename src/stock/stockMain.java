@@ -1,7 +1,10 @@
 package stock;
 
+import java.io.BufferedWriter;
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -14,6 +17,8 @@ public class stockMain {
     private static ArrayList<Integer> reord_amt = new ArrayList<Integer>();
     private static ArrayList<String> temp = new ArrayList<String>();
         
+    
+    private static int orderNumber = 0;
     
     //String ArrayList to Integer ArrayList Method
     public static int s_StrToInt(String a){
@@ -51,7 +56,7 @@ public class stockMain {
                 	temp.add(entry[5]);
                 }
                 catch(ArrayIndexOutOfBoundsException oob) {
-                	temp.add(" ");
+                	temp.add("NULL");
                 }
                 
             }
@@ -182,15 +187,31 @@ public class stockMain {
 		
 	}
 	
-	public void ExportOrder() {
+	public static void ExportOrder() throws IOException {
+        //Make Order CSV
+            //Format = "Name | Quantity"
 		
-	}
+        File file = new File("C:/Users/liaml/Desktop/302 Files/order_"+ orderNumber + ".csv");
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+        orderNumber = orderNumber + 1;
+
+        for (int i = 0; i < names.size(); i++) {
+            bw.write(names.get(i) + "," + reord_amt.get(i) + "," + temp.get(i));
+            bw.newLine();
+        }
+        bw.close();
+        fw.close();
+    }
+
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ImportItemProp();
 		for (int i = 0; i < names.size(); i++) {
 			System.out.println(names.get(i) + " : " + manu_cost.get(i) + " : " + ret_price.get(i) + " : " + reord_point.get(i) + " : " + reord_amt.get(i) + " : " + temp.get(i));
 		}
+		ExportOrder();
 	}
 
 
