@@ -165,12 +165,10 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 			}
 			
 		} else if (e.getActionCommand() == "LoadItemProp") {
-			//if item prop has been imported
-			if (fileLoaded) {
-				//do stockMain.ImportItemProp() function
-				stock.stockMain.ImportItemProp();
-				JOptionPane.showMessageDialog(getParent(), "Item Properties Successfully Imported.");
-			}
+			//do stockMain.ImportItemProp() function
+			stock.stockMain.ImportItemProp();
+			JOptionPane.showMessageDialog(getParent(), "Item Properties Successfully Imported.");
+			
 		} else if (e.getActionCommand() == "CreateOrder") {
 			//if item prop has been imported
 			if (fileLoaded) {
