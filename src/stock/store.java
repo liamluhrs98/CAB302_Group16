@@ -4,7 +4,7 @@ import java.util.*;
 
 //Java program implementing Singleton class
 //with method name as that of class
-class store
+public class store
 {
 // static variable single_instance of type Singleton
 private static store single_instance=null;

@@ -3,6 +3,7 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import java.text.DecimalFormat;
 import javax.swing.text.DefaultCaret;
 
 import stock.stockMain;
+import stock.store;
 import delivery.deliveryMain;
 
 import java.awt.*;
@@ -20,7 +22,7 @@ import javax.swing.*;
 
 public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListener {
 	
-	private boolean fileLoaded;
+	public static boolean fileLoaded;
 	JPanel panel; 
 	JPanel IPpanel;
 	JLabel header;
@@ -28,6 +30,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 	JTable itemPropertiesTable;
 	JTable inventoryTable;
 	
+	DecimalFormat df = new DecimalFormat("##.00");
 	
 	public GUIMain(String title) {
 		super(title);
@@ -44,17 +47,18 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		c.gridy = 0;
 		panel.add(header, c); 
 		
-		capital = new JLabel("Capital = 0");
+		
+		capital = new JLabel("Capital = $" + stock.store.capital);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 0;
 		panel.add(capital, c);
 		
-		JButton ItemProp = new JButton("Display Item Properties");
+		JButton ItemProp = new JButton("Load Item Properties");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
-		ItemProp.setActionCommand("ItemProp");
+		ItemProp.setActionCommand("LoadItemProp");
 		ItemProp.addActionListener(this);
 		panel.add(ItemProp, c);
 		
@@ -62,7 +66,7 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
-		DisplayInventory.setActionCommand("DisplayInventory");
+		DisplayInventory.setActionCommand("DisplayItems");
 		DisplayInventory.addActionListener(this);
 		panel.add(DisplayInventory, c);
 		
@@ -98,45 +102,79 @@ public class GUIMain extends javax.swing.JFrame implements Runnable, ActionListe
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "itemProp") {
-			String[][] rowData = new String[stock.stockMain.names.size()+1][6];
-			rowData[0][0] = "Item Name";
-			rowData[0][1] = "Manufacturing Cost";
-			rowData[0][2] = "Retail Price";
-			rowData[0][3] = "Reorder Point";
-			rowData[0][4] = "Reorder Amount";
-			rowData[0][5] = "Temperature";
-			for (int i = 1; i < stock.stockMain.names.size() + 1; i++) {
-				try {
-					rowData[i][0] = stock.stockMain.names.get(i-1);
-					rowData[i][1] = stock.stockMain.manu_cost.get(i-1).toString();
-					rowData[i][2] = stock.stockMain.ret_price.get(i-1).toString();
-					rowData[i][3] = stock.stockMain.reord_point.get(i-1).toString();
-					rowData[i][4] = stock.stockMain.reord_amt.get(i-1).toString();
-					rowData[i][5] = stock.stockMain.temp.get(i-1);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(getParent(), "Error Creating Item Properties Table");
-					JOptionPane.showMessageDialog(getParent(), e1.getStackTrace());
+		if (e.getActionCommand() == "DisplayItems") {
+			if (fileLoaded) {
+				
+				String[][] rowData = new String[stock.stockMain.names.size()+1][7];
+				rowData[0][0] = "ITEM NAME";
+				rowData[0][1] = "MANU. COST";
+				rowData[0][2] = "RET. PRICE";
+				rowData[0][3] = "REORD. POINT";
+				rowData[0][4] = "REORD. AMOUNT";
+				rowData[0][5] = "TEMP";
+				rowData[0][6] = "QUANTITY";
+				for (int i = 1; i < stock.stockMain.names.size() + 1; i++) {
+					try {
+						rowData[i][0] = stock.stockMain.names.get(i-1);
+						rowData[i][1] = stock.stockMain.manu_cost.get(i-1).toString();
+						rowData[i][2] = stock.stockMain.ret_price.get(i-1).toString();
+						rowData[i][3] = stock.stockMain.reord_point.get(i-1).toString();
+						rowData[i][4] = stock.stockMain.reord_amt.get(i-1).toString();
+						rowData[i][5] = stock.stockMain.temp.get(i-1);
+						rowData[i][6] = Integer.toString((stock.stock.getQuantity(stock.stockMain.names.get(i-1))));
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(getParent(), "Error Creating Item Properties Table");
+						JOptionPane.showMessageDialog(getParent(), e1.getStackTrace());
+					}
 				}
-				String[] IPColumnNames = { "Item Name", "Manufacturing Cost", "Retail Price", "Reorder Point", "Reorder Amount", "Temperature" };
+				String[] IPColumnNames = { "Item Name", "Manufacturing Cost", "Retail Price", "Reorder Point", "Reorder Amount", "Temperature", "Quantity" };
 				itemPropertiesTable = new JTable(rowData, IPColumnNames);
 				JTextField IPTableTitle = new JTextField("Item Properties");
-				IPpanel.add(IPTableTitle);
-				IPpanel.add(itemPropertiesTable);
-				getContentPane().remove(IPpanel);
-				getContentPane().add(IPpanel);
-				setPreferredSize(new Dimension(678, 250));
-				pack();
-				setVisible(true);
+				
+				JFrame IPFrame = new JFrame();
+				IPFrame.add(IPTableTitle);
+				IPFrame.remove(itemPropertiesTable);
+				IPFrame.add(itemPropertiesTable);
+				//IPFrame.setPreferredSize(new Dimension(750, 550));
+				IPFrame.pack();
+				IPFrame.setVisible(true);
 			}
-		} else if (e.getActionCommand() == "DisplayInventory") {
-			
+		} else if (e.getActionCommand() == "LoadItemProp") {
+			stock.stockMain.ImportItemProp();
+			JOptionPane.showMessageDialog(getParent(), "Item Properties Successfully Imported.");
 		} else if (e.getActionCommand() == "CreateOrder") {
+			try{
+				stock.stockMain.ExportOrder();
+				delivery.deliveryMain.runDelivery();
+				JOptionPane.showMessageDialog(getParent(), "Order Successfully Created.");
+			} catch(IOException ioe) {
+				JOptionPane.showMessageDialog(getParent(), "IO Exception when creating Order.");
+			}
 			
 		} else if (e.getActionCommand() == "LoadSale") {
 			
-		} else if (e.getActionCommand() == "LoadManifest") {
+			stock.stockMain.ImportSalesLog();
+			JOptionPane.showMessageDialog(getParent(), "Sales Log Successfully Imported.");
+			panel.remove(capital);
+			capital.setText("Capital = $" + stock.store.capital);
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 2;
+			c.gridy = 0;
+			panel.add(capital, c);
+			pack();
 			
+		} else if (e.getActionCommand() == "LoadManifest") {
+			stock.stockMain.ImportManifest();
+			JOptionPane.showMessageDialog(getParent(), "Manifest Successfully Imported.");
+			panel.remove(capital);
+			capital.setText("Capital = $" + stock.store.capital);
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 2;
+			c.gridy = 0;
+			panel.add(capital, c);
+			pack();
 		} else {
 			JOptionPane.showMessageDialog(getParent(), "Please select a valid log file");
 		}

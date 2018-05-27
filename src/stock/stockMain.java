@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import gui.GUIMain;
+
 public class stockMain {
 	
     public static ArrayList<String> names = new ArrayList<String>();
@@ -24,6 +26,9 @@ public class stockMain {
     
     private static int orderNumber = 0;
     private static int manifestNumber = 0;
+    private static int salesNumber = 0;
+    
+    private static double totalProfit = 0;
 
     public static void initialiseVariables() {
     	store supermart = store.store();
@@ -47,6 +52,13 @@ public class stockMain {
         String line = "";
         String csvSplitBy = ",";
 
+        names.clear();
+        manu_cost.clear();
+        ret_price.clear();
+        reord_point.clear();
+        reord_amt.clear();
+        temp.clear();
+        
         try (BufferedReader br = new BufferedReader(new FileReader(itemprop_location))) {
 
             while ((line = br.readLine()) != null) {
@@ -69,6 +81,9 @@ public class stockMain {
                 }
                 
             }
+            
+            gui.GUIMain.fileLoaded = true;
+            
         } catch (IOException ioe) {
         	System.out.println("IOException");
             ioe.printStackTrace();
@@ -215,14 +230,42 @@ public class stockMain {
 	
 	public static void UpdateCapital(double amount) {
 		double currentCapital = store.capital;
-		DecimalFormat df = new DecimalFormat("##.00");
-		store.capital = currentCapital + amount;
-		//store.capital = df.format(store.capital);
-		
+		store.capital = currentCapital + amount;		
 	}
 	
-	public void ImportSalesLog() {
-		
+	public static void ImportSalesLog() {
+		String saleslog_location = "C:/302_Files/sales_log_" + salesNumber + ".csv";
+        String line = "";
+        String csvSplitBy = ",";
+
+        salesNumber = salesNumber + 1;
+        
+       totalProfit = 0;
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(saleslog_location))) {
+
+            while ((line = br.readLine()) != null) {
+            	
+                //Split on comma (as its a csv)
+                String[] entry = line.split(csvSplitBy);
+                
+                for (int i = 0; i < names.size(); i++) {
+                	if (entry[0].equals(names.get(i))) {
+                		stock.changeAmount(quantities, names.get(i), -1 * s_StrToInt(entry[1]));
+                		
+                		totalProfit = totalProfit + (s_StrToInt(entry[1]) * ret_price.get(i)); 
+                	}
+                }
+               
+            }
+        } catch (IOException ioe) {
+        	System.out.println("IOException");
+            ioe.printStackTrace();
+        }
+        
+        
+        UpdateCapital(totalProfit);
+        
 	}
 	
 	public void CurrentStock() {
@@ -240,15 +283,18 @@ public class stockMain {
         orderNumber = orderNumber + 1;
 
         for (int i = 0; i < names.size(); i++) {
-            bw.write(names.get(i) + "," + reord_amt.get(i) + "," + temp.get(i) + "," + manu_cost.get(i));
-            bw.newLine();
+        	if (stock.getQuantity(names.get(i)) <= reord_point.get(i)) {
+    			bw.write(names.get(i) + "," + reord_amt.get(i) + "," + temp.get(i) + "," + manu_cost.get(i));
+	            bw.newLine();
+        	}
+            
         }
         bw.close();
         fw.close();
     }
 
 	
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		
 		initialiseVariables();
 		ImportItemProp();
@@ -259,7 +305,7 @@ public class stockMain {
         store.UpdateInventory();
 		System.out.println(store.inventory);
 		
-	}
+	}*/
 
 
 }
