@@ -19,9 +19,7 @@ public class stockMain {
     private static ArrayList<String> temp = new ArrayList<String>();
        
     static DecimalFormat df = new DecimalFormat("##.00");
-    
-    private static double capital = 0;
-    
+      
     static stock quantities = new stock();
     
     private static int orderNumber = 0;
@@ -45,7 +43,7 @@ public class stockMain {
     }
 	
     public static void ImportItemProp() {
-		String itemprop_location = "C:/Users/liaml/Desktop/302 Files/item_properties.csv";
+		String itemprop_location = "C:/302_Files/item_properties.csv";
         String line = "";
         String csvSplitBy = ",";
 
@@ -187,7 +185,7 @@ public class stockMain {
 	}
 	
 	public static void ImportManifest() {
-		String manifest_location = "C:/Users/liaml/Desktop/302 Files/manifest_" + manifestNumber + ".csv";
+		String manifest_location = "C:/302_Files/manifest_" + manifestNumber + ".csv";
         String line = "";
         String csvSplitBy = ",";
 
@@ -235,7 +233,7 @@ public class stockMain {
         //Make Order CSV
             //Format = "Name | Quantity"
 		
-        File file = new File("C:/Users/liaml/Desktop/302 Files/order_"+ orderNumber + ".csv");
+        File file = new File("C:/302_Files/order_"+ orderNumber + ".csv");
         FileWriter fw = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(fw);
         

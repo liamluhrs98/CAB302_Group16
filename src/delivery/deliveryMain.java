@@ -40,6 +40,10 @@ public class deliveryMain {
 	private static double manuCost = 0;
 	private static double totalCost = 0;
 	
+	//CSV Variables
+	private static int orderNumber = 0;
+	private static int manifestNumber = 0;
+	
 	//Truck Assigning Variables
 	private static ArrayList<String> coldFood = new ArrayList<String>();
 	private static ArrayList<Integer> coldFoodAmount = new ArrayList<Integer>();
@@ -47,31 +51,29 @@ public class deliveryMain {
 	private static ArrayList<Integer> dryFoodAmount = new ArrayList<Integer>();
 	
 	public static void importOrderCSV() {
-		int orderNo = 0;
 		//Import CSV
 		//Sort into object/array
-		String csvfile = "C:/Users/harry/Desktop/order_"+ orderNo +".csv";
+		String csvfile = "C:/302_Files/order_"+ orderNumber +".csv";
 		String line = "";
 		String csvSplitBy = ",";
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
 
-	          while ((line = br.readLine()) != null) {	        	  	
-	        	  	// use comma as separator
-		            String[] importedCSV = line.split(csvSplitBy);
-		//Sort item name, amount, cost and temperature into their own ArrayLists, converting Strings to Ints.
-		            names.add(importedCSV[0]);
-		            amountInts.add(d_StringToInt(importedCSV[1]));  
-		            temp.add(importedCSV[2]);
-		            manuAmount.add(d_StringToInt(importedCSV[3]));
-		            	            
-		      	}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-		    } catch (IOException e) {
-		    	e.printStackTrace();
-		 }
-		orderNo += 1;
+			while ((line = br.readLine()) != null) {	        	  	
+				// use comma as separator
+		        String[] importedCSV = line.split(csvSplitBy);
+		        //Sort item name, amount, cost and temperature into their own ArrayLists, converting Strings to Ints.
+		        names.add(importedCSV[0]);
+		        amountInts.add(d_StringToInt(importedCSV[1]));  
+		        temp.add(importedCSV[2]);
+		        manuAmount.add(d_StringToInt(importedCSV[3]));
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+		   	e.printStackTrace();
+		}
+		orderNumber += 1;
 	}
 	
 	public static void sortFood() {
@@ -179,7 +181,7 @@ public class deliveryMain {
 		int sumCold = 0;
 		int sumDry = 0;
 		//Make Manifest CSV
-		File file = new File("C:/Users/harry/Desktop/manifest_0.csv");
+		File file = new File("C:/302_Files/manifest_" + manifestNumber + ".csv");
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		//Refridge
@@ -213,6 +215,7 @@ public class deliveryMain {
 		bw.close();
 		fw.close();
 		//store.UpdateCapital(totalCost);
+		manifestNumber += 1;
 	}
 	
 	public static void main(String[] args) throws IOException {
