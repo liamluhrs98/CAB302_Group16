@@ -35,7 +35,6 @@ public class deliveryMain {
 	//Imported CSV Variables
 	private static ArrayList<Integer> amountInts = new ArrayList<Integer>();
 	private static ArrayList<String> names = new ArrayList<String>();
-	private static ArrayList<order> orderlist = new ArrayList<order>();
 	private static ArrayList<String> temp = new ArrayList<String>();
 	private static ArrayList<Integer> manuAmount = new ArrayList<Integer>();
 	
@@ -67,10 +66,7 @@ public class deliveryMain {
 		            amountInts.add(d_StringToInt(importedCSV[1]));  
 		            temp.add(importedCSV[2]);
 		            manuAmount.add(d_StringToInt(importedCSV[3]));
-		            
-		            for (int i = 0; i < amountInts.size(); i++) {
-		              orderlist.add(new order(names, amountInts));
-		            }	            
+		            	            
 		      	}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -183,8 +179,10 @@ public class deliveryMain {
 		}
 	
 	public static void createManifest() throws IOException {
+		int sumCold = 0;
+		int sumDry = 0;
 		//Make Manifest CSV
-		File file = new File("manifest_0.csv");
+		File file = new File("C:/Users/harry/Desktop/manifest_0.csv");
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		//Refridge
@@ -194,6 +192,12 @@ public class deliveryMain {
 		for (int i = 0; i < coldFood.size(); i++) {
 			bw.write(coldFood.get(i) + "," + coldFoodAmount.get(i));
 			bw.newLine();
+			sumCold += coldFoodAmount.get(i);
+			if (sumCold >= 800) {
+				bw.write(">Refrigerated");
+				bw.newLine();
+				sumCold = 0;
+			}
 		}
 		//Ordinary
 		//name, quantity
@@ -202,6 +206,12 @@ public class deliveryMain {
 		for (int i = 0; i < dryFood.size(); i++) {
 			bw.write(dryFood.get(i) + "," + dryFoodAmount.get(i));
 			bw.newLine();
+			sumDry += dryFoodAmount.get(i);
+			if ( sumDry >= 1000) {
+				bw.write(">Ordinary");
+				bw.newLine();
+				sumDry = 0;
+			}
 		}
 		bw.close();
 		fw.close();
